@@ -31,4 +31,7 @@ pip install -r requirements.txt
 
 ```
 from unbiasai.utils import get_embedding
+query = "What are the cafeteria plan benefits?",
+query_embedding = get_embedding(query)
+print(query_embedding)
 ```
