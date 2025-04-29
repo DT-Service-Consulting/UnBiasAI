@@ -26,3 +26,9 @@
 ```
 pip install -r requirements.txt
 ```
+
+## Usage
+
+```
+from unbiasai.utils import get_embedding
+```
