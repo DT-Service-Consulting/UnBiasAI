@@ -6,11 +6,9 @@ __pycache__/
 # Poetry virtual environment folders (if created inside project)
 .env/
 .venv/
-
-# Environment variable files
 *.env
 .env.*
-.env
+## To uncomment before publishing ## .env
 
 # VS Code IDE files
 .vscode/
@@ -56,7 +54,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Questions lists 
-dtsc_queries/
+## To uncomment before publishing ## dtsc_queries/
 
 # Unit test / coverage reports
 htmlcov/
