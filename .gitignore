@@ -55,6 +55,9 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Questions lists 
+dtsc_queries/
+
 # Unit test / coverage reports
 htmlcov/
 .tox/

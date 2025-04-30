@@ -1,23 +1,50 @@
 # New package as per deprecation warning
 from langchain_openai import OpenAIEmbeddings
 
-# V: from from Retrieval Bias-Recency
-def generate_embedding(text):
-    embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY,model="text-embedding-3-large")  # Use the appropriate model
-    response = embeddings.embed_query(text)  # Correctly call the method to generate embeddings
+def generate_embedding(text, api_key):
+    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
+                                  model="text-embedding-3-large")  # Use the appropriate model
+    # Correctly call the method to generate embeddings
+    response = embeddings.embed_query(text)
     embedding = response
     return embedding
+
 
 def get_embedding(text, api_key):
     """Get embeddings for a text using OpenAI's embedding model"""
     embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                 model="text-embedding-3-small")
+                                  model="text-embedding-3-small")
     response = embeddings.embed_query(text)
     embedding = response
     return embedding
 
 # V: from from Retrieval Bias-Recency
-def retrieve(query, model_name, k=10, re_rank=False):
+
+def initialize_llm(model_name, api_key):
+    # Initialize LLM
+    model_name = model_name.lower()
+    if model_name == "gpt":
+        llm = ChatOpenAI(model_name="gpt-4o-2024-11-20",
+                         openai_api_key=api_key)
+    elif model_name == "claude":
+        llm = ChatAnthropic(model="claude-3-7-sonnet-latest",
+                            anthropic_api_key=api_key)
+    elif model_name == "mistral":
+        llm = ChatMistralAI(model="mistral-large-latest",
+                            mistral_api_key=api_key)
+    elif model_name == "cohere":
+        llm = ChatCohere(model="command-a-03-2025",
+                         cohere_api_key=api_key)
+    elif model_name == "deepseek":
+        import os
+        os.environ["DEEPSEEK_API_KEY"] = api_key
+        llm = ChatDeepSeek(model="deepseek-v3-chat")
+    else:
+        raise ValueError(f"Unsupported model: {model_name}")
+    return llm
+
+
+def retrieve(query, llm, k=10, re_rank=False):
     """
     Retrieve top-k documents for a query using Supabase vector search with optional LLM re-ranking.
 
@@ -30,23 +57,6 @@ def retrieve(query, model_name, k=10, re_rank=False):
     Returns:
       List[dict]: A list of dictionaries with document 'id', 'rank', and 'content'.
     """
-
-    # Initialize LLM
-    model_name = model_name.lower()
-    if model_name == "gpt":
-        llm = ChatOpenAI(model_name="gpt-4o-2024-11-20", openai_api_key=OPENAI_API_KEY)
-    elif model_name == "claude":
-        llm = ChatAnthropic(model="claude-3-7-sonnet-latest", anthropic_api_key=CLAUDE_API_KEY)
-    elif model_name == "mistral":
-        llm = ChatMistralAI(model="mistral-large-latest", mistral_api_key=MISTRAL_API_KEY)
-    elif model_name == "cohere":
-        llm = ChatCohere(model="command-a-03-2025", cohere_api_key=COHERE_API_KEY)
-    elif model_name == "deepseek":
-        import os
-        os.environ["DEEPSEEK_API_KEY"] = DEEPSEEK_API_KEY
-        llm = ChatDeepSeek(model="deepseek-v3-chat")
-    else:
-        raise ValueError(f"Unsupported model: {model_name}")
 
     try:
         # Step 1: Get embedding
@@ -98,16 +108,19 @@ def retrieve(query, model_name, k=10, re_rank=False):
                 """
 
                 messages = [
-                    SystemMessage(content="You are a helpful assistant skilled at ranking document relevance."),
+                    SystemMessage(
+                        content="You are a helpful assistant skilled at ranking document relevance."),
                     HumanMessage(content=prompt)
                 ]
 
                 llm_response = llm.invoke(messages)
                 ranking_text = llm_response.content.strip()
-                ranking_order = [int(num.strip()) - 1 for num in re.findall(r'\d+', ranking_text)]
+                ranking_order = [
+                    int(num.strip()) - 1 for num in re.findall(r'\d+', ranking_text)]
 
                 if len(ranking_order) != actual_k or sorted(ranking_order) != list(range(actual_k)):
-                    print(f"Invalid ranking received: {ranking_text}. Using default order.")
+                    print(
+                        f"Invalid ranking received: {ranking_text}. Using default order.")
                     ranking_order = list(range(actual_k))
 
                 docs = [docs[i] for i in ranking_order]
