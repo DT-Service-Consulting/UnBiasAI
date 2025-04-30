@@ -43,14 +43,21 @@ pip install -r requirements.txt
 ```python
 from dotenv import load_dotenv
 import os
+from unbiasai.utils import get_embedding
 
 # Load the variables from .env
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-print(OPENAI_API_KEY)
 
-from unbiasai.utils import get_embedding
-query = "What are the cafeteria plan benefits?",
+query = "What are the cafeteria plan benefits?"
 query_embedding = get_embedding(query, OPENAI_API_KEY)
+
 print(query_embedding)
+
+from unbiasai.language import detect_language
+
+print(detect_language)
+from dtsc_queries.language import test_queries
+
+print(test_queries)
 ```

@@ -24,7 +24,10 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "unbiasai", from = "src"}]
+packages = [
+    {include = "unbiasai", from = "src"},
+    {include = "dtsc_queries", from = "src"}
+    ]
 
 
 [build-system]
