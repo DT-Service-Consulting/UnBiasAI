@@ -46,3 +46,4 @@ test_queries = [
     "What is Scrum for?", # 4046
     "What about BNP Paribas warrants?" # 4048
 ]
+
