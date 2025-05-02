@@ -1,3 +1,4 @@
 langchain-openai
 cohere
 supabase
+langchain
