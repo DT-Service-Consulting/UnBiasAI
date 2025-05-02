@@ -16,8 +16,8 @@ def generate_embeddings():
                                   model="text-embedding-3-small")
     return embeddings
 
-def generate_response(text, embeddings):
-    return embeddings.embed_query(text)
+#def generate_response(text, embeddings):
+#    return embeddings.embed_query(text)
 
 def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
     for index, row in df.iterrows():
