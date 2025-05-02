@@ -3,12 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Poetry virtual environment folders (if created inside project)
-.env/
-.venv/
-*.env
-.env.*
-## To uncomment before publishing ## .env
+## Poetry virtual environment folders (if created inside project)
+#.env/
+#.venv/
+#*.env
+#.env.*
+#.env
 
 # VS Code IDE files
 .vscode/
