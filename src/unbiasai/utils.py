@@ -1,5 +1,6 @@
 # New package as per deprecation warning
 from langchain_openai import OpenAIEmbeddings
+import pandas as pd
 
 def generate_embedding(text, api_key):
     embeddings = OpenAIEmbeddings(openai_api_key=api_key,
@@ -159,14 +160,14 @@ def retrieve(query, llm, k=10, re_rank=False):
     raw_docs = get_documents_from_supabase(query, k)
     if not raw_docs:
         return []
-    
+
     # Step 2: Convert to Doc objects
     docs = convert_to_doc_objects(raw_docs)
-    
+
     # Step 3: Re-rank if requested
     if re_rank and len(docs) > 1:
         reranking_prompt = create_reranking_prompt(query, docs, k)
         docs = perform_llm_reranking(llm, reranking_prompt, docs, k)
-    
+
     # Step 4: Format and return results
     return format_results(docs)
