@@ -1,12 +1,15 @@
-
-OPENAI_API_KEY = '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'
 from unbiasai.utils import get_embedding
-
-
 def main():
+    # Define your API key here
+    OPENAI_API_KEY = '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'
+    
+    # Your query (removed the comma after the string)
     query = "What are the cafeteria plan benefits?"
-    query_embedding = get_embedding(query)
+    
+    # Pass the API key to the function
+    query_embedding = get_embedding(query, OPENAI_API_KEY)
+    
     print(query_embedding)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
