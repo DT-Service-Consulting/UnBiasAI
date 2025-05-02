@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from src.unbiasai.utils import generate_embedding
+from src.unbiasai.utils import initialize_llm
 
 @patch('src.unbiasai.utils.OpenAIEmbeddings')
 def test_generate_embedding(mock_openai_embeddings):
@@ -45,3 +46,16 @@ def test_initialize_llm_cohere(mock_chat_cohere):
     api_key = "test-api-key"
     initialize_llm("cohere", api_key)
     mock_chat_cohere.assert_called_once_with(model="command-a-03-2025", cohere_api_key=api_key)
+
+@patch('src.unbiasai.utils.ChatDeepSeek')
+@patch('src.unbiasai.utils.os')
+def test_initialize_llm_deepseek(mock_os, mock_chat_deepseek):
+    api_key = "test-api-key"
+    initialize_llm("deepseek", api_key)
+    mock_os.environ.__setitem__.assert_called_once_with("DEEPSEEK_API_KEY", api_key)
+    mock_chat_deepseek.assert_called_once_with(model="deepseek-v3-chat")
+
+def test_initialize_llm_invalid_model():
+    api_key = "test-api-key"
+    with pytest.raises(ValueError, match="Unsupported model: invalid_model"):
+        initialize_llm("invalid_model", api_key)

@@ -30,6 +30,8 @@ def get_embedding(text, api_key):
     return embedding
 
 # V: from Retrieval Bias-Recency
+import langchain_openai
+from langchain_deepseek import ChatDeepSeek
 
 def initialize_llm(model_name, api_key):
     # Initialize LLM
