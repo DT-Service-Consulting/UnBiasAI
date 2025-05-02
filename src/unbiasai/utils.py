@@ -9,7 +9,7 @@ from langchain_openai import ChatOpenAI
 import os
 
 
-def generate_embeddings(initialized_llm):
+def generate_embeddings():
     # Embeddings always performed with OpenAI
     openai_api_key = os.getenv("OPENAI_API_KEY")
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
@@ -30,13 +30,13 @@ def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
         }
         response = supabase_client.table(table_name).insert(data).execute()
 
-def get_embedding(text, api_key):
-    """Get embeddings for a text using OpenAI's embedding model"""
-    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                  model="text-embedding-3-small")
-    response = embeddings.embed_query(text)
-    embedding = response
-    return embedding
+#def get_embedding(text, api_key):
+#    """Get embeddings for a text using OpenAI's embedding model"""
+#    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
+#                                  model="text-embedding-3-small")
+#    response = embeddings.embed_query(text)
+#    embedding = response
+#    return embedding
 
 
 def initialize_llm(model_name, api_key):
