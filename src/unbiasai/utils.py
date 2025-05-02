@@ -2,15 +2,15 @@
 from langchain_openai import OpenAIEmbeddings
 import pandas as pd
 
-def generate_embedding(text, api_key):
+def generate_embedding(text, api_key, model):
     embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                  model="text-embedding-3-large")  # Use the appropriate model
+                                  model=model)  # Use the appropriate model
     # Correctly call the method to generate embeddings
     response = embeddings.embed_query(text)
     embedding = response
     return embedding
 
-def insert_documents(df: pd.DataFrame):
+def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
     for index, row in df.iterrows():
         print(f"Inserting document with ID: {int(row['id'])}")
         data = {
@@ -19,7 +19,7 @@ def insert_documents(df: pd.DataFrame):
             "metadata": row.get("metadata", None),
             "embedding": row["embedding"]
         }
-        response = supabase_client.table("retrieval_Recency").insert(data).execute()
+        response = supabase_client.table(table_name).insert(data).execute()
 
 def get_embedding(text, api_key):
     """Get embeddings for a text using OpenAI's embedding model"""
