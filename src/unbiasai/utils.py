@@ -5,12 +5,19 @@ import langchain_openai
 from langchain_deepseek import ChatDeepSeek
 from langchain_cohere import ChatCohere
 from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
+import os
 
-def generate_embedding(text, initialized_llm):
-    embeddings = initialized_llm
-    response = embeddings.embed_query(text)
-    embedding = response
-    return embedding
+
+def generate_embeddings(initialized_llm):
+    # Embeddings always performed with OpenAI
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
+                                  model="text-embedding-3-small")
+    return embeddings
+
+def generate_response(text, embeddings):
+    return embeddings.embed_query(text)
 
 def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
     for index, row in df.iterrows():
