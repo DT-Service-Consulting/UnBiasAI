@@ -1,4 +1,4 @@
-question_list = [
+test_queries = [
    "What are the Cafeteria plan benefits?", # 3989
    "How can I modify a page on dtsc.be?", # 3999
    "How do I access the shared library?", # 4001

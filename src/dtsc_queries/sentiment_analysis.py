@@ -1,4 +1,4 @@
-question_list = [
+test_queries = [
     "What are the cafeteria plan benefits?",
     "Quels sont les avantages du plan cafétéria ?",
     "Wat zijn de voordelen van het cafetariaplan?",

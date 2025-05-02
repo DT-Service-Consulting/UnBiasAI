@@ -1,4 +1,4 @@
-question_list = [
+test_queries = [
     # vague
     "How can I order a washing machine through the cafeteria plan?",
     "How much is the Family Allowance for my third child?",
