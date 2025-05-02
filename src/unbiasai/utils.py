@@ -1,11 +1,13 @@
 # New package as per deprecation warning
 from langchain_openai import OpenAIEmbeddings
 import pandas as pd
+import langchain_openai
+from langchain_deepseek import ChatDeepSeek
+from langchain_cohere import ChatCohere
+from langchain_anthropic import ChatAnthropic
 
-def generate_embedding(text, api_key, model):
-    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                  model=model)  # Use the appropriate model
-    # Correctly call the method to generate embeddings
+def generate_embedding(text, initialized_llm):
+    embeddings = initialized_llm
     response = embeddings.embed_query(text)
     embedding = response
     return embedding
@@ -29,9 +31,6 @@ def get_embedding(text, api_key):
     embedding = response
     return embedding
 
-# V: from Retrieval Bias-Recency
-import langchain_openai
-from langchain_deepseek import ChatDeepSeek
 
 def initialize_llm(model_name, api_key):
     # Initialize LLM
@@ -49,11 +48,11 @@ def initialize_llm(model_name, api_key):
         llm = ChatCohere(model="command-a-03-2025",
                          cohere_api_key=api_key)
     elif model_name == "deepseek":
-        import os
-        os.environ["DEEPSEEK_API_KEY"] = api_key
-        llm = ChatDeepSeek(model="deepseek-v3-chat")
+        llm = ChatDeepSeek(model="deepseek-chat")
     else:
         raise ValueError(f"Unsupported model: {model_name}")
+
+    print(f'LLM initialized correctly: {model_name}, llm: {llm}')
     return llm
 
 # VH: replaces retrieve function
