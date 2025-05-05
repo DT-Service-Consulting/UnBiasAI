@@ -9,17 +9,18 @@ from langchain_openai import ChatOpenAI
 import os
 
 
-def generate_embeddings():
+def generate_embeddings(text):
     # Embeddings always performed with OpenAI
     openai_api_key = os.getenv("OPENAI_API_KEY")
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
-                                  model="text-embedding-3-small")
-    return embeddings
+                                 model="text-embedding-3-small")
+    return embeddings.embed_query(text)
 
-#def generate_response(text, embeddings):
+# def generate_response(text, embeddings):
 #    return embeddings.embed_query(text)
 
-def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
+#def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
+def insert_documents(df: pd.DataFrame, client, table_name: str = "retrieval_Recency"):
     for index, row in df.iterrows():
         print(f"Inserting document with ID: {int(row['id'])}")
         data = {
@@ -28,7 +29,10 @@ def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
             "metadata": row.get("metadata", None),
             "embedding": row["embedding"]
         }
-        response = supabase_client.table(table_name).insert(data).execute()
+#        response = supabase_client.table(table_name).upsert(data).execute() # change upsert back to insert at the end!!
+        response = client.table(table_name).upsert(data).execute()
+
+
 
 #def get_embedding(text, api_key):
 #    """Get embeddings for a text using OpenAI's embedding model"""
