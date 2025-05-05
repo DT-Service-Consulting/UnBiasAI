@@ -111,27 +111,11 @@ def initialize_llm(model_name, api_key):
     print(f'LLM initialized correctly: {model_name}, llm: {llm}')
     return llm
 
-# VH: replaces retrieve function
-def get_documents_from_supabase(query, k=10, supabase=None):
-    """Get document embeddings from Supabase.
-    
-    Args:
-        query (str): The search query
-        k (int): Number of documents to retrieve
-        supabase (Client, optional): Supabase client. If None, will use the global supabase_client
-        
-    Returns:
-        list: List of document data
-    """
+def get_documents_from_supabase(query, supabase_client, k=10):
+    """Get document embeddings from Supabase."""
     try:
-        # Use the provided supabase client or fall back to the global one
-        client = supabase if supabase is not None else supabase_client
-        
-        # Generate embeddings for the query
         query_embedding = generate_embeddings(query)
-        
-        # Call the Supabase RPC function
-        response = client.rpc(
+        response = supabase_client.rpc(
             'match_documents_recency_no_filter',
             {
                 'query_embedding': query_embedding,
@@ -142,12 +126,9 @@ def get_documents_from_supabase(query, k=10, supabase=None):
         if not response.data or len(response.data) == 0:
             print("No relevant documents found.")
             return []
-            
         return response.data
     except Exception as e:
         print(f"Error retrieving documents: {e}")
-        import traceback
-        traceback.print_exc()
         return []
 
 
@@ -219,7 +200,7 @@ def format_results(docs):
     ]
 
 
-def retrieve(query, llm, k=10, re_rank=False):
+def retrieve(query, llm, supabase_client, k=10, re_rank=False):
     """
     Retrieve top-k documents for a query using Supabase vector search with optional LLM re-ranking.
     Parameters:
@@ -231,7 +212,7 @@ def retrieve(query, llm, k=10, re_rank=False):
     List[dict]: A list of dictionaries with document 'id', 'rank', and 'content'.
     """
     # Step 1: Get raw documents from Supabase
-    raw_docs = get_documents_from_supabase(query, k)
+    raw_docs = get_documents_from_supabase(query, supabase_client, k)
     if not raw_docs:
         return []
 
