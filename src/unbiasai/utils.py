@@ -112,11 +112,26 @@ def initialize_llm(model_name, api_key):
     return llm
 
 # VH: replaces retrieve function
-def get_documents_from_supabase(query, k=10):
-    """Get document embeddings from Supabase."""
+def get_documents_from_supabase(query, k=10, supabase=None):
+    """Get document embeddings from Supabase.
+    
+    Args:
+        query (str): The search query
+        k (int): Number of documents to retrieve
+        supabase (Client, optional): Supabase client. If None, will use the global supabase_client
+        
+    Returns:
+        list: List of document data
+    """
     try:
-        query_embedding = get_embedding(query)
-        response = supabase.rpc(
+        # Use the provided supabase client or fall back to the global one
+        client = supabase if supabase is not None else supabase_client
+        
+        # Generate embeddings for the query
+        query_embedding = generate_embeddings(query)
+        
+        # Call the Supabase RPC function
+        response = client.rpc(
             'match_documents_recency_no_filter',
             {
                 'query_embedding': query_embedding,
@@ -131,6 +146,8 @@ def get_documents_from_supabase(query, k=10):
         return response.data
     except Exception as e:
         print(f"Error retrieving documents: {e}")
+        import traceback
+        traceback.print_exc()
         return []
 
 
