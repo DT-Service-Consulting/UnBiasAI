@@ -14,11 +14,13 @@ def test_generate_embedding(mock_openai_embeddings):
     text = "Test input text"
     api_key = "test-api-key"
 
-    # Call the function
-    result = generate_embedding(text, api_key)
+    # Mock the environment variable
+    with patch('os.getenv', return_value=api_key):
+        # Call the function
+        result = generate_embeddings(text)
 
     # Assertions
-    mock_openai_embeddings.assert_called_once_with(openai_api_key=api_key, model="text-embedding-3-large")
+    mock_openai_embeddings.assert_called_once_with(openai_api_key=api_key, model="text-embedding-3-small")
     mock_instance.embed_query.assert_called_once_with(text)
     assert result == [0.1, 0.2, 0.3]
 

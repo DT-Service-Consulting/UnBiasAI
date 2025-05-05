@@ -10,17 +10,71 @@ import os
 
 
 def generate_embeddings(text):
-    # Embeddings always performed with OpenAI
+    """
+    Generate embeddings for a given text using OpenAI's embedding model.
+
+    Parameters:
+    text (str): The input text for which embeddings need to be generated.
+
+    Environment Variables:
+    OPENAI_API_KEY (str): The API key required to authenticate with OpenAI's services.
+                          This must be set in the environment variables.
+
+    Returns:
+    list[float]: A list of floating-point numbers representing the embedding vector for the input text.
+
+    Raises:
+    Exception: If the `OPENAI_API_KEY` environment variable is not set.
+
+    Example:
+    >>> import os
+    >>> os.environ["OPENAI_API_KEY"] = "your_openai_api_key"
+    >>> embeddings = generate_embeddings("Artificial Intelligence is transforming the world.")
+    >>> print(embeddings)
+    [0.123, 0.456, 0.789, ...]  # Example embedding vector
+    """
     openai_api_key = os.getenv("OPENAI_API_KEY")
+    if not openai_api_key:
+        raise Exception("OPENAI_API_KEY environment variable not set")
+
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
-                                 model="text-embedding-3-small")
+                                   model="text-embedding-3-small")
+
     return embeddings.embed_query(text)
 
-# def generate_response(text, embeddings):
-#    return embeddings.embed_query(text)
 
-#def insert_documents(df: pd.DataFrame, table_name: str = "retrieval_Recency"):
+
 def insert_documents(df: pd.DataFrame, client, table_name: str = "retrieval_Recency"):
+    """
+    Insert documents from a pandas DataFrame into a database table.
+
+    Parameters:
+    df (pd.DataFrame): A DataFrame containing the documents to be inserted.
+                       Each row should have the following columns:
+                       - 'id': Unique identifier for the document (int).
+                       - 'content': The content of the document (str).
+                       - 'metadata' (optional): Additional metadata for the document.
+                       - 'embedding': The embedding vector for the document.
+    client: The database client used to interact with the database.
+    table_name (str): The name of the table where the documents will be inserted.
+                      Defaults to "retrieval_Recency".
+
+    Returns:
+    None
+
+    Example:
+    >>> import pandas as pd
+    >>> from some_database_client import Client
+    >>> data = {
+    ...     "id": [1, 2],
+    ...     "content": ["Document 1 content", "Document 2 content"],
+    ...     "metadata": [{"author": "Alice"}, {"author": "Bob"}],
+    ...     "embedding": [[0.1, 0.2], [0.3, 0.4]]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> client = Client()
+    >>> insert_documents(df, client, table_name="my_table")
+    """
     for index, row in df.iterrows():
         print(f"Inserting document with ID: {int(row['id'])}")
         data = {
@@ -29,18 +83,9 @@ def insert_documents(df: pd.DataFrame, client, table_name: str = "retrieval_Rece
             "metadata": row.get("metadata", None),
             "embedding": row["embedding"]
         }
-#        response = supabase_client.table(table_name).upsert(data).execute() # change upsert back to insert at the end!!
         response = client.table(table_name).upsert(data).execute()
+    return
 
-
-
-#def get_embedding(text, api_key):
-#    """Get embeddings for a text using OpenAI's embedding model"""
-#    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-#                                  model="text-embedding-3-small")
-#    response = embeddings.embed_query(text)
-#    embedding = response
-#    return embedding
 
 
 def initialize_llm(model_name, api_key):
