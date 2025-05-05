@@ -44,7 +44,7 @@ def generate_embeddings(text):
 
 
 
-def insert_documents(df: pd.DataFrame, client, table_name: str = "retrieval_Recency"):
+def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"):
     """
     Insert documents from a pandas DataFrame into a database table.
 

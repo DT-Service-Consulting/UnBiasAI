@@ -11,7 +11,9 @@ load_dotenv()
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-SUPABASE_URL = "https://rrjbrtbsvdoxndchvchq.supabase.co"
+# Shreya's
+# SUPABASE_URL = "https://rrjbrtbsvdoxndchvchq.supabase.co"
+SUPABASE_URL = 'https://wuxtoyrimqwohizxcmzf.supabase.co'
 
 def create_supabase_client():
     # Create a Supabase client using the URL and key
