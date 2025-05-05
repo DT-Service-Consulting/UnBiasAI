@@ -1,6 +1,6 @@
 # UnBiasAI
 
-UnBiasAI is a Python package developed by BRAIN-by DTSC. 
+UnBiasAI is a Python package developed by [BRAIN](https://brain.dtsc.be/) (the [DTSC](https://www.dtsc.be) AI-research lab). 
 It is designed to help users identify and mitigate bias in AI-generated text. 
 It provides tools for analyzing text, detecting bias, and generating unbiased responses.
 
@@ -91,7 +91,7 @@ print(test_queries)
 
 ## Authors & Credits
 
-- [Brain by DTSC](https://www.brain.dtsc.be)
+- [Brain by DTSC](https://brain.dtsc.be/)
 - [Shreya Bhattacharya](https://www.linkedin.com/in/dr-shreyab/)
 - [Vincent Hagenow](https://www.linkedin.com/in/vincent-hagenow-6621082b7/)
 - [Marco Di Gennaro](https://www.linkedin.com/in/marcodig/)
@@ -102,4 +102,4 @@ This project is licensed under the Apache License Version 2.0. See the [LICENSE]
 
 ## Acknowledgments
 
-- [DT Service Consulting](https://www.dtsc.be/)
+- [DT Services and Consulting](https://www.dtsc.be/)
