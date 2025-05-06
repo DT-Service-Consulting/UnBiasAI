@@ -6,7 +6,9 @@ from langchain_deepseek import ChatDeepSeek
 from langchain_cohere import ChatCohere
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
+from langchain.schema import SystemMessage, HumanMessage
 import os
+import re
 
 
 def generate_embeddings(text):
@@ -38,7 +40,7 @@ def generate_embeddings(text):
         raise Exception("OPENAI_API_KEY environment variable not set")
 
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
-                                   model="text-embedding-3-small")
+                                   model="text-embedding-3-large")
 
     return embeddings.embed_query(text)
 
