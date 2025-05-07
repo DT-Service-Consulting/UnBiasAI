@@ -9,6 +9,7 @@ from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 import os
 import re
+from datetime import datetime
 
 
 def generate_embeddings(text):
@@ -228,3 +229,16 @@ def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
 
     # Step 4: Format and return results
     return format_results(docs)
+
+
+def extract_created_datetime(content, pattern=r'createdDateTime[":]*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)'):
+    # Try the pattern
+    match = re.search(pattern, content)
+    if match:
+        # Handle both with and without milliseconds
+        datetime_str = match.group(1)
+        if '.' in datetime_str:
+            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        else:
+            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%SZ")
+    return None
