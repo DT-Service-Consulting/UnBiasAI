@@ -1,0 +1,291 @@
+id,content
+0,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Accessing Shared Developer Environments in CloudStack
+
+A shared developer environment allows multiple developers to access code repositories and development tools from a single workspace (e.g., devteam@company.com). The advantage is that it doesn't require secondary authentication.
+
+(This method only works if you have been previously added to the development group. If not, please contact a system administrator.)
+
+➤ 1. Connect to CloudStack Portal
+  •  Open your browser and go to https://cloudstack.company.com.
+  •  Log in with your company credentials.
+
+➤ 2. Add the shared developer environment
+  1.  Click on your profile icon (top right corner).
+  2.  Select Open another development environment.
+  3.  Enter the name of the shared environment (e.g.: frontend-team).
+  4.  Click on Connect.
+
+✅ The shared developer environment will open in a new tab."
+1,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Accès aux environnements de développement partagés dans CloudStack
+
+Un environnement de développement partagé permet à plusieurs développeurs d'accéder aux dépôts de code et aux outils de développement à partir d'un espace de travail unique (par exemple, devteam@company.com). L'avantage est qu'il ne nécessite pas d'authentification secondaire.
+
+(Cette méthode ne fonctionne que si vous avez été préalablement ajouté au groupe de développement. Si ce n'est pas le cas, veuillez contacter un administrateur système.)
+
+➤ 1. Se connecter au portail CloudStack
+  •  Ouvrez votre navigateur et accédez à https://cloudstack.company.com.
+  •  Connectez-vous avec vos identifiants d'entreprise.
+
+➤ 2. Ajouter l'environnement de développement partagé
+  1.  Cliquez sur votre icône de profil (coin supérieur droit).
+  2.  Sélectionnez Ouvrir un autre environnement de développement.
+  3.  Entrez le nom de l'environnement partagé (ex.: frontend-team).
+  4.  Cliquez sur Connecter.
+
+✅ L'environnement de développement partagé s'ouvrira dans un nouvel onglet."
+2,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Toegang tot gedeelde ontwikkelomgevingen in CloudStack
+
+Een gedeelde ontwikkelomgeving stelt meerdere ontwikkelaars in staat om toegang te krijgen tot codebronnen en ontwikkeltools vanuit één werkruimte (bijv. devteam@company.com). Het voordeel is dat er geen secundaire authenticatie nodig is.
+
+(Deze methode werkt alleen als u eerder bent toegevoegd aan de ontwikkelgroep. Zo niet, neem dan contact op met een systeembeheerder.)
+
+➤ 1. Verbind met het CloudStack portaal
+  •  Open uw browser en ga naar https://cloudstack.company.com.
+  •  Log in met uw bedrijfsgegevens.
+
+➤ 2. Voeg de gedeelde ontwikkelomgeving toe
+  1.  Klik op uw profielicoon (rechtsboven).
+  2.  Selecteer Een andere ontwikkelomgeving openen.
+  3.  Voer de naam van de gedeelde omgeving in (bijv.: frontend-team).
+  4.  Klik op Verbinden.
+
+✅ De gedeelde ontwikkelomgeving wordt geopend in een nieuw tabblad."
+3,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Zugriff auf gemeinsam genutzte Entwicklungsumgebungen in CloudStack
+
+Eine gemeinsam genutzte Entwicklungsumgebung ermöglicht mehreren Entwicklern den Zugriff auf Code-Repositories und Entwicklungstools von einem einzigen Arbeitsbereich aus (z.B. devteam@company.com). Der Vorteil ist, dass keine sekundäre Authentifizierung erforderlich ist.
+
+(Diese Methode funktioniert nur, wenn Sie zuvor zur Entwicklungsgruppe hinzugefügt wurden. Falls nicht, wenden Sie sich bitte an einen Systemadministrator.)
+
+➤ 1. Verbindung zum CloudStack-Portal herstellen
+  •  Öffnen Sie Ihren Browser und gehen Sie zu https://cloudstack.company.com.
+  •  Melden Sie sich mit Ihren Unternehmensanmeldedaten an.
+
+➤ 2. Gemeinsam genutzte Entwicklungsumgebung hinzufügen
+  1.  Klicken Sie auf Ihr Profilsymbol (obere rechte Ecke).
+  2.  Wählen Sie Eine weitere Entwicklungsumgebung öffnen.
+  3.  Geben Sie den Namen der gemeinsam genutzten Umgebung ein (z.B.: frontend-team).
+  4.  Klicken Sie auf Verbinden.
+
+✅ Die gemeinsam genutzte Entwicklungsumgebung wird in einem neuen Tab geöffnet.
+"
+10,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Configuring Multi-Factor Authentication for Corporate VPN
+
+Multi-factor authentication provides an additional security layer when accessing company resources remotely through the VPN (Virtual Private Network). It requires both something you know (password) and something you have (mobile device).
+
+(This setup is mandatory for all employees accessing corporate resources remotely. If you encounter any issues, please contact the IT Security team.)
+
+➤ 1. Install the Authenticator App
+  •  Download the SecureID app from your device's app store.
+  •  Open the app and allow requested permissions.
+
+➤ 2. Link Your Account
+  1.  Log in to the Security Portal at https://securityportal.company.com.
+  2.  Navigate to MFA Settings under your profile.
+  3.  Click ""Add New Device"" and scan the displayed QR code with the SecureID app.
+  4.  Enter the verification code from the app to complete the setup.
+
+✅ Your multi-factor authentication is now configured and will be required for all VPN connections."
+11,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Configuration de l'authentification à plusieurs facteurs pour le VPN d'entreprise
+
+L'authentification à plusieurs facteurs fournit une couche de sécurité supplémentaire lors de l'accès aux ressources de l'entreprise à distance via le VPN (Réseau Privé Virtuel). Elle nécessite à la fois quelque chose que vous connaissez (mot de passe) et quelque chose que vous possédez (appareil mobile).
+
+(Cette configuration est obligatoire pour tous les employés accédant aux ressources de l'entreprise à distance. Si vous rencontrez des problèmes, veuillez contacter l'équipe de sécurité informatique.)
+
+➤ 1. Installez l'application d'authentification
+  •  Téléchargez l'application SecureID depuis la boutique d'applications de votre appareil.
+  •  Ouvrez l'application et autorisez les permissions demandées.
+
+➤ 2. Liez votre compte
+  1.  Connectez-vous au portail de sécurité à l'adresse https://securityportal.company.com.
+  2.  Accédez aux Paramètres MFA dans votre profil.
+  3.  Cliquez sur ""Ajouter un nouvel appareil"" et scannez le code QR affiché avec l'application SecureID.
+  4.  Entrez le code de vérification de l'application pour terminer la configuration.
+
+✅ Votre authentification à plusieurs facteurs est maintenant configurée et sera requise pour toutes les connexions VPN.
+"
+12,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Configuratie van meervoudige verificatie voor bedrijfs-VPN
+
+Meervoudige verificatie biedt een extra beveiligingslaag bij het op afstand toegang krijgen tot bedrijfsmiddelen via het VPN (Virtual Private Network). Het vereist zowel iets dat u weet (wachtwoord) als iets dat u heeft (mobiel apparaat).
+
+(Deze configuratie is verplicht voor alle medewerkers die op afstand toegang hebben tot bedrijfsmiddelen. Als u problemen ondervindt, neem dan contact op met het IT-beveiligingsteam.)
+
+➤ 1. Installeer de Authenticator-app
+  •  Download de SecureID-app uit de app store van uw apparaat.
+  •  Open de app en sta de gevraagde machtigingen toe.
+
+➤ 2. Koppel uw account
+  1.  Log in op het beveiligingsportaal op https://securityportal.company.com.
+  2.  Navigeer naar MFA-instellingen onder uw profiel.
+  3.  Klik op ""Nieuw apparaat toevoegen"" en scan de weergegeven QR-code met de SecureID-app.
+  4.  Voer de verificatiecode van de app in om de configuratie te voltooien.
+
+✅ Uw meervoudige verificatie is nu geconfigureerd en zal vereist zijn voor alle VPN-verbindingen.
+"
+13,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Konfiguration der Multi-Faktor-Authentifizierung für Unternehmens-VPN
+
+Die Multi-Faktor-Authentifizierung bietet eine zusätzliche Sicherheitsebene beim Fernzugriff auf Unternehmensressourcen über das VPN (Virtual Private Network). Sie erfordert sowohl etwas, das Sie wissen (Passwort), als auch etwas, das Sie besitzen (mobiles Gerät).
+
+(Diese Einrichtung ist für alle Mitarbeiter obligatorisch, die aus der Ferne auf Unternehmensressourcen zugreifen. Bei Problemen wenden Sie sich bitte an das IT-Sicherheitsteam.)
+
+➤ 1. Installieren Sie die Authenticator-App
+  •  Laden Sie die SecureID-App aus dem App-Store Ihres Geräts herunter.
+  •  Öffnen Sie die App und erlauben Sie die angeforderten Berechtigungen.
+
+➤ 2. Verknüpfen Sie Ihr Konto
+  1.  Melden Sie sich im Sicherheitsportal unter https://securityportal.company.com an.
+  2.  Navigieren Sie zu MFA-Einstellungen unter Ihrem Profil.
+  3.  Klicken Sie auf ""Neues Gerät hinzufügen"" und scannen Sie den angezeigten QR-Code mit der SecureID-App.
+  4.  Geben Sie den Bestätigungscode aus der App ein, um die Einrichtung abzuschließen.
+
+✅ Ihre Multi-Faktor-Authentifizierung ist jetzt konfiguriert und wird für alle VPN-Verbindungen benötigt.
+"
+20,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Employee Onboarding: Completing Required Training Modules
+
+All new employees must complete a series of compliance and orientation training modules within their first 30 days. These modules cover essential company policies, security practices, and workplace conduct guidelines.
+
+(This requirement applies to all employees regardless of position or department. Extensions may be granted only in exceptional circumstances with manager approval.)
+
+➤ 1. Access the Learning Management System
+  •  Go to https://lms.company.com using your company credentials.
+  •  Select ""My Learning Path"" from the dashboard.
+
+➤ 2. Complete Required Modules
+  1.  Review your assigned training modules under ""Required Onboarding.""
+  2.  Complete each module in sequence (approximately 4 hours total).
+  3.  Take the assessment quiz at the end of each module (minimum passing score: 80%).
+  4.  Download your completion certificates for your records.
+
+✅ Your training progress is automatically reported to HR. Your manager will receive a notification when all required modules are completed."
+21,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Intégration des employés : Compléter les modules de formation obligatoires
+Tous les nouveaux employés doivent compléter une série de modules de formation sur la conformité et l'orientation dans les 30 premiers jours. Ces modules couvrent les politiques essentielles de l'entreprise, les pratiques de sécurité et les directives de conduite sur le lieu de travail.
+(Cette exigence s'applique à tous les employés, indépendamment du poste ou du département. Des prolongations peuvent être accordées uniquement dans des circonstances exceptionnelles avec l'approbation du responsable.)
+➤ 1. Accéder au système de gestion de l'apprentissage • Rendez-vous sur https://lms.company.com en utilisant vos identifiants d'entreprise. • Sélectionnez ""Mon parcours d'apprentissage"" dans le tableau de bord.
+➤ 2. Compléter les modules obligatoires
+Consultez vos modules de formation assignés sous ""Intégration obligatoire.""
+Complétez chaque module dans l'ordre (environ 4 heures au total).
+Passez le quiz d'évaluation à la fin de chaque module (score minimum de réussite : 80%).
+Téléchargez vos certificats d'achèvement pour vos dossiers.
+✅ Votre progression de formation est automatiquement signalée aux RH. Votre responsable recevra une notification lorsque tous les modules obligatoires seront terminés.
+"
+22,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Inwerkprogramma voor medewerkers: Verplichte trainingsmodules voltooien
+Alle nieuwe medewerkers moeten binnen de eerste 30 dagen een reeks compliance- en oriëntatietrainingsmodules voltooien. Deze modules behandelen essentiële bedrijfsbeleid, beveiligingspraktijken en richtlijnen voor gedrag op de werkplek.
+(Deze vereiste geldt voor alle medewerkers, ongeacht functie of afdeling. Verlengingen kunnen alleen in uitzonderlijke omstandigheden worden verleend met goedkeuring van de manager.)
+➤ 1. Toegang tot het Leermanagementsysteem • Ga naar https://lms.company.com met uw bedrijfsgegevens. • Selecteer ""Mijn leerpad"" op het dashboard.
+➤ 2. Verplichte modules voltooien
+Bekijk uw toegewezen trainingsmodules onder ""Verplichte inwerkprogramma.""
+Voltooi elke module in volgorde (ongeveer 4 uur in totaal).
+Maak de beoordelingsquiz aan het einde van elke module (minimale slagingsscore: 80%).
+Download uw voltooiingscertificaten voor uw administratie.
+✅ Uw trainingsvoortgang wordt automatisch gerapporteerd aan HR. Uw manager ontvangt een melding wanneer alle vereiste modules zijn voltooid.
+"
+23,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Mitarbeitereinarbeitung: Abschluss erforderlicher Schulungsmodule
+Alle neuen Mitarbeiter müssen innerhalb der ersten 30 Tage eine Reihe von Compliance- und Orientierungsschulungsmodulen absolvieren. Diese Module behandeln wesentliche Unternehmensrichtlinien, Sicherheitspraktiken und Richtlinien für das Verhalten am Arbeitsplatz.
+(Diese Anforderung gilt für alle Mitarbeiter unabhängig von Position oder Abteilung. Verlängerungen können nur in Ausnahmefällen mit Genehmigung des Vorgesetzten gewährt werden.)
+➤ 1. Zugriff auf das Lernmanagementsystem • Gehen Sie mit Ihren Unternehmensanmeldedaten zu https://lms.company.com. • Wählen Sie ""Mein Lernpfad"" aus dem Dashboard.
+➤ 2. Erforderliche Module abschließen
+Überprüfen Sie Ihre zugewiesenen Schulungsmodule unter ""Erforderliche Einarbeitung.""
+Schließen Sie jedes Modul der Reihe nach ab (insgesamt etwa 4 Stunden).
+Nehmen Sie am Ende jedes Moduls an der Bewertungsprüfung teil (Mindestpunktzahl zum Bestehen: 80%).
+Laden Sie Ihre Abschlusszertifikate für Ihre Unterlagen herunter.
+✅ Ihr Schulungsfortschritt wird automatisch an die Personalabteilung gemeldet. Ihr Vorgesetzter erhält eine Benachrichtigung, wenn alle erforderlichen Module abgeschlossen sind.
+"
+30,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Quarterly Performance Review Process
+
+Quarterly performance reviews provide structured feedback opportunities for employees and managers. These reviews help track progress toward annual goals, identify development needs, and recognize achievements throughout the year.
+
+(All employees who have completed their 90-day probationary period are required to participate in the quarterly review process. New hires will join the cycle in the quarter following their probation completion.)
+
+➤ 1. Self-Assessment Phase
+  •  Access the Performance Portal at https://performance.company.com.
+  •  Complete your self-assessment form at least one week before your scheduled review.
+
+➤ 2. Manager Review Meeting
+  1.  Schedule a 60-minute meeting with your direct manager.
+  2.  Review your achievements against quarterly objectives.
+  3.  Discuss areas for improvement and development opportunities.
+  4.  Document agreed action items and goals for the next quarter.
+
+✅ Following your review meeting, both you and your manager should digitally sign the completed review form within 48 hours. The finalized document will be stored in your personnel file."
+31,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Processus d'évaluation trimestrielle des performances
+Les évaluations trimestrielles des performances offrent des opportunités structurées de feedback pour les employés et les managers. Ces évaluations aident à suivre les progrès vers les objectifs annuels, à identifier les besoins de développement et à reconnaître les réalisations tout au long de l'année.
+(Tous les employés ayant terminé leur période probatoire de 90 jours sont tenus de participer au processus d'évaluation trimestrielle. Les nouveaux employés rejoindront le cycle dans le trimestre suivant la fin de leur période probatoire.)
+➤ 1. Phase d'auto-évaluation • Accédez au Portail de Performance à l'adresse https://performance.company.com. • Complétez votre formulaire d'auto-évaluation au moins une semaine avant votre évaluation programmée.
+➤ 2. Réunion d'évaluation avec le manager
+Planifiez une réunion de 60 minutes avec votre manager direct.
+Passez en revue vos réalisations par rapport aux objectifs trimestriels.
+Discutez des domaines à améliorer et des opportunités de développement.
+Documentez les actions convenues et les objectifs pour le trimestre suivant.
+✅ Suite à votre réunion d'évaluation, vous et votre manager devez signer numériquement le formulaire d'évaluation complété dans les 48 heures. Le document finalisé sera conservé dans votre dossier personnel.
+"
+32,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Kwartaal Beoordelingsproces
+Kwartaalbeoordelingen bieden gestructureerde feedbackmogelijkheden voor medewerkers en managers. Deze beoordelingen helpen bij het bijhouden van voortgang naar jaarlijkse doelen, het identificeren van ontwikkelingsbehoeften en het erkennen van prestaties gedurende het jaar.
+(Alle medewerkers die hun proefperiode van 90 dagen hebben voltooid, moeten deelnemen aan het kwartaalbeoordelingsproces. Nieuwe medewerkers nemen deel aan de cyclus in het kwartaal na afronding van hun proefperiode.)
+➤ 1. Zelfevaluatiefase • Open het Prestatieportaal op https://performance.company.com. • Vul uw zelfevaluatieformulier in ten minste één week voor uw geplande beoordeling.
+➤ 2. Beoordelingsgesprek met manager
+Plan een 60-minuten durend gesprek met uw directe manager.
+Bespreek uw prestaties ten opzichte van de kwartaaldoelstellingen.
+Bespreek verbeterpunten en ontwikkelingsmogelijkheden.
+Documenteer overeengekomen actiepunten en doelen voor het volgende kwartaal.
+✅ Na uw beoordelingsgesprek moeten zowel u als uw manager het ingevulde beoordelingsformulier binnen 48 uur digitaal ondertekenen. Het definitieve document wordt opgeslagen in uw personeelsdossier.
+"
+33,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Vierteljährlicher Leistungsbeurteilungsprozess
+Vierteljährliche Leistungsbeurteilungen bieten strukturierte Feedback-Möglichkeiten für Mitarbeiter und Führungskräfte. Diese Beurteilungen helfen dabei, den Fortschritt in Bezug auf Jahresziele zu verfolgen, Entwicklungsbedarf zu identifizieren und Leistungen im Laufe des Jahres anzuerkennen.
+(Alle Mitarbeiter, die ihre 90-tägige Probezeit abgeschlossen haben, müssen am vierteljährlichen Beurteilungsprozess teilnehmen. Neue Mitarbeiter nehmen am Zyklus in dem Quartal teil, das auf den Abschluss ihrer Probezeit folgt.)
+➤ 1. Selbstbeurteilungsphase • Greifen Sie auf das Leistungsportal unter https://performance.company.com zu. • Füllen Sie Ihr Selbstbeurteilungsformular mindestens eine Woche vor Ihrem geplanten Beurteilungsgespräch aus.
+➤ 2. Beurteilungsgespräch mit der Führungskraft
+Planen Sie ein 60-minütiges Gespräch mit Ihrer direkten Führungskraft.
+Überprüfen Sie Ihre Leistungen im Vergleich zu den Quartalszielen.
+Besprechen Sie Verbesserungsbereiche und Entwicklungsmöglichkeiten.
+Dokumentieren Sie vereinbarte Maßnahmen und Ziele für das nächste Quartal.
+✅ Nach Ihrem Beurteilungsgespräch sollten sowohl Sie als auch Ihre Führungskraft das ausgefüllte Beurteilungsformular innerhalb von 48 Stunden digital unterschreiben. Das fertiggestellte Dokument wird in Ihrer Personalakte aufbewahrt.
+"
+40,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Enrolling in Employee Wellness Program
+
+The company wellness program offers resources and incentives to support your physical and mental wellbeing. Participation is voluntary and offers benefits including fitness reimbursements, health coaching, and premium discounts on your health insurance.
+
+(All full-time employees are eligible to participate in the wellness program. Benefits are prorated for part-time employees based on scheduled hours.)
+
+➤ 1. Create Your Wellness Account
+  •  Visit the Benefits Portal at https://benefits.company.com.
+  •  Click on ""Wellness Program"" under the Benefits section.
+
+➤ 2. Complete Enrollment Steps
+  1.  Review the program details and privacy policy.
+  2.  Complete the health risk assessment questionnaire.
+  3.  Schedule your annual biometric screening appointment.
+  4.  Select your preferred wellness activities from the available options.
+
+✅ Once enrolled, you can track your progress through the mobile app or web portal. Wellness incentives are distributed quarterly based on your participation level."
+41,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Inscription au programme de bien-être des employés
+Le programme de bien-être de l'entreprise offre des ressources et des incitations pour soutenir votre bien-être physique et mental. La participation est volontaire et offre des avantages comprenant des remboursements de frais de fitness, du coaching santé et des réductions de prime sur votre assurance santé.
+(Tous les employés à temps plein sont éligibles pour participer au programme de bien-être. Les avantages sont calculés au prorata pour les employés à temps partiel en fonction des heures prévues.)
+➤ 1. Créez votre compte bien-être • Visitez le Portail des avantages à https://benefits.company.com. • Cliquez sur ""Programme de bien-être"" dans la section Avantages.
+➤ 2. Complétez les étapes d'inscription
+Consultez les détails du programme et la politique de confidentialité.
+Remplissez le questionnaire d'évaluation des risques pour la santé.
+Planifiez votre rendez-vous pour le dépistage biométrique annuel.
+Sélectionnez vos activités de bien-être préférées parmi les options disponibles.
+✅ Une fois inscrit, vous pouvez suivre votre progression via l'application mobile ou le portail web. Les incitations au bien-être sont distribuées trimestriellement en fonction de votre niveau de participation.
+"
+42,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Inschrijven voor het Werknemerswellnessprogramma
+Het wellnessprogramma van het bedrijf biedt middelen en stimulansen ter ondersteuning van uw fysieke en mentale welzijn. Deelname is vrijwillig en biedt voordelen waaronder fitnessvergoedingen, gezondheidscoaching en premiekortingen op uw ziektekostenverzekering.
+(Alle voltijdse werknemers komen in aanmerking voor deelname aan het wellnessprogramma. Voordelen worden naar rato berekend voor deeltijdwerknemers op basis van geplande uren.)
+➤ 1. Maak uw wellnessaccount aan • Bezoek het Voordelenportaal op https://benefits.company.com. • Klik op ""Wellnessprogramma"" onder de sectie Voordelen.
+➤ 2. Voltooi de inschrijvingsstappen
+Bekijk de programmadetails en het privacybeleid.
+Vul de vragenlijst voor gezondheidrisicobeoordeling in.
+Plan uw jaarlijkse afspraak voor biometrische screening.
+Selecteer uw voorkeursactiviteiten voor wellness uit de beschikbare opties.
+✅ Eenmaal ingeschreven kunt u uw voortgang volgen via de mobiele app of het webportaal. Wellnessincentives worden elk kwartaal uitgekeerd op basis van uw deelnameniveau.
+"
+43,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Anmeldung zum Mitarbeiter-Wellnessprogramm
+Das Wellnessprogramm des Unternehmens bietet Ressourcen und Anreize zur Unterstützung Ihres körperlichen und geistigen Wohlbefindens. Die Teilnahme ist freiwillig und bietet Vorteile wie Fitnesserstattungen, Gesundheitscoaching und Prämienrabatte auf Ihre Krankenversicherung.
+(Alle Vollzeitmitarbeiter sind berechtigt, am Wellnessprogramm teilzunehmen. Leistungen für Teilzeitmitarbeiter werden anteilig auf Basis der geplanten Arbeitsstunden berechnet.)
+➤ 1. Erstellen Sie Ihr Wellness-Konto • Besuchen Sie das Leistungsportal unter https://benefits.company.com. • Klicken Sie auf ""Wellnessprogramm"" im Bereich Leistungen.
+➤ 2. Schließen Sie die Anmeldeschritte ab
+Lesen Sie die Programmdetails und die Datenschutzrichtlinie.
+Füllen Sie den Fragebogen zur Gesundheitsrisikobewertung aus.
+Vereinbaren Sie einen Termin für Ihr jährliches biometrisches Screening.
+Wählen Sie Ihre bevorzugten Wellness-Aktivitäten aus den verfügbaren Optionen.
+✅ Nach der Anmeldung können Sie Ihren Fortschritt über die mobile App oder das Webportal verfolgen. Wellness-Anreize werden vierteljährlich auf Basis Ihres Teilnahmeniveaus verteilt.
+"
