@@ -101,7 +101,7 @@ def initialize_llm(model_name, api_key):
         llm = ChatAnthropic(model="claude-3-7-sonnet-latest",
                             anthropic_api_key=api_key)
     elif model_name == "mistral":
-        llm = ChatMistralAI(model="mistral-large-latest",
+        llm = ChatMistralAI(model="mistral-small-latest",
                             mistral_api_key=api_key)
     elif model_name == "cohere":
         llm = ChatCohere(model="command-a-03-2025",
