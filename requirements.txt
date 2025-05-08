@@ -2,3 +2,7 @@ langchain-openai
 cohere
 supabase
 langchain
+langchain-deepseek
+langchain-cohere
+langchain-anthropic
+langchain-openai

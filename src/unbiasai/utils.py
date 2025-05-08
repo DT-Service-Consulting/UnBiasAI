@@ -1,16 +1,83 @@
 # New package as per deprecation warning
 from langchain_openai import OpenAIEmbeddings
 import pandas as pd
+import langchain_openai
+from langchain_deepseek import ChatDeepSeek
+from langchain_cohere import ChatCohere
+from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
+from langchain.schema import SystemMessage, HumanMessage
+import os
+import re
+from datetime import datetime
 
-def generate_embedding(text, api_key):
-    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                  model="text-embedding-3-large")  # Use the appropriate model
-    # Correctly call the method to generate embeddings
-    response = embeddings.embed_query(text)
-    embedding = response
-    return embedding
 
-def insert_documents(df: pd.DataFrame):
+def generate_embeddings(text):
+    """
+    Generate embeddings for a given text using OpenAI's embedding model.
+
+    Parameters:
+    text (str): The input text for which embeddings need to be generated.
+
+    Environment Variables:
+    OPENAI_API_KEY (str): The API key required to authenticate with OpenAI's services.
+                          This must be set in the environment variables.
+
+    Returns:
+    list[float]: A list of floating-point numbers representing the embedding vector for the input text.
+
+    Raises:
+    Exception: If the `OPENAI_API_KEY` environment variable is not set.
+
+    Example:
+    >>> import os
+    >>> os.environ["OPENAI_API_KEY"] = "your_openai_api_key"
+    >>> embeddings = generate_embeddings("Artificial Intelligence is transforming the world.")
+    >>> print(embeddings)
+    [0.123, 0.456, 0.789, ...]  # Example embedding vector
+    """
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+    if not openai_api_key:
+        raise Exception("OPENAI_API_KEY environment variable not set")
+
+    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
+                                   model="text-embedding-3-large")
+
+    return embeddings.embed_query(text)
+
+
+
+def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"):
+    """
+    Insert documents from a pandas DataFrame into a database table.
+
+    Parameters:
+    df (pd.DataFrame): A DataFrame containing the documents to be inserted.
+                       Each row should have the following columns:
+                       - 'id': Unique identifier for the document (int).
+                       - 'content': The content of the document (str).
+                       - 'metadata' (optional): Additional metadata for the document.
+                       - 'embedding': The embedding vector for the document.
+    client: The database client used to interact with the database.
+    table_name (str): The name of the table where the documents will be inserted.
+                      Defaults to "retrieval_Recency".
+
+    Returns:
+    None
+
+    Example:
+    >>> import pandas as pd
+    >>> from some_database_client import Client
+    >>> data = {
+    ...     "id": [1, 2],
+    ...     "content": ["Document 1 content", "Document 2 content"],
+    ...     "metadata": [{"author": "Alice"}, {"author": "Bob"}],
+    ...     "embedding": [[0.1, 0.2], [0.3, 0.4]]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> client = Client()
+    >>> insert_documents(df, client, table_name="my_table")
+    """
     for index, row in df.iterrows():
         print(f"Inserting document with ID: {int(row['id'])}")
         data = {
@@ -19,17 +86,10 @@ def insert_documents(df: pd.DataFrame):
             "metadata": row.get("metadata", None),
             "embedding": row["embedding"]
         }
-        response = supabase_client.table("retrieval_Recency").insert(data).execute()
+        response = client.table(table_name).upsert(data).execute()
+    return
 
-def get_embedding(text, api_key):
-    """Get embeddings for a text using OpenAI's embedding model"""
-    embeddings = OpenAIEmbeddings(openai_api_key=api_key,
-                                  model="text-embedding-3-small")
-    response = embeddings.embed_query(text)
-    embedding = response
-    return embedding
 
-# V: from Retrieval Bias-Recency
 
 def initialize_llm(model_name, api_key):
     # Initialize LLM
@@ -41,26 +101,25 @@ def initialize_llm(model_name, api_key):
         llm = ChatAnthropic(model="claude-3-7-sonnet-latest",
                             anthropic_api_key=api_key)
     elif model_name == "mistral":
-        llm = ChatMistralAI(model="mistral-large-latest",
+        llm = ChatMistralAI(model="mistral-small-latest",
                             mistral_api_key=api_key)
     elif model_name == "cohere":
         llm = ChatCohere(model="command-a-03-2025",
                          cohere_api_key=api_key)
     elif model_name == "deepseek":
-        import os
-        os.environ["DEEPSEEK_API_KEY"] = api_key
-        llm = ChatDeepSeek(model="deepseek-v3-chat")
+        llm = ChatDeepSeek(model="deepseek-chat")
     else:
         raise ValueError(f"Unsupported model: {model_name}")
+
+    print(f'LLM initialized correctly: {model_name}, llm: {llm}')
     return llm
 
-# VH: replaces retrieve function
-def get_documents_from_supabase(query, k=10):
+def get_documents_from_supabase(query, supabase_client, function_name='match_documents_recency_no_filter', k=10):
     """Get document embeddings from Supabase."""
     try:
-        query_embedding = get_embedding(query)
-        response = supabase.rpc(
-            'match_documents_recency_no_filter',
+        query_embedding = generate_embeddings(query)
+        response = supabase_client.rpc(
+            function_name,
             {
                 'query_embedding': query_embedding,
                 'match_count': k
@@ -70,7 +129,6 @@ def get_documents_from_supabase(query, k=10):
         if not response.data or len(response.data) == 0:
             print("No relevant documents found.")
             return []
-            
         return response.data
     except Exception as e:
         print(f"Error retrieving documents: {e}")
@@ -145,7 +203,7 @@ def format_results(docs):
     ]
 
 
-def retrieve(query, llm, k=10, re_rank=False):
+def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
     """
     Retrieve top-k documents for a query using Supabase vector search with optional LLM re-ranking.
     Parameters:
@@ -157,7 +215,7 @@ def retrieve(query, llm, k=10, re_rank=False):
     List[dict]: A list of dictionaries with document 'id', 'rank', and 'content'.
     """
     # Step 1: Get raw documents from Supabase
-    raw_docs = get_documents_from_supabase(query, k)
+    raw_docs = get_documents_from_supabase(query, supabase_client, function_name, k)
     if not raw_docs:
         return []
 
@@ -171,3 +229,16 @@ def retrieve(query, llm, k=10, re_rank=False):
 
     # Step 4: Format and return results
     return format_results(docs)
+
+
+def extract_created_datetime(content, pattern=r'createdDateTime[":]*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)'):
+    # Try the pattern
+    match = re.search(pattern, content)
+    if match:
+        # Handle both with and without milliseconds
+        datetime_str = match.group(1)
+        if '.' in datetime_str:
+            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+        else:
+            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%SZ")
+    return None

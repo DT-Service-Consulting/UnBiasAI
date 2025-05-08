@@ -1,5 +1,26 @@
 # UnBiasAI
 
+UnBiasAI is a Python package developed by [BRAIN](https://brain.dtsc.be/) (the [DTSC](https://www.dtsc.be) AI-research lab). 
+It is designed to help users identify and mitigate bias in AI-generated text. 
+It provides tools for analyzing text, detecting bias, and generating unbiased responses.
+
+## Features
+UnBiasAI analyzes five possible biases among five leading Large Language Models (LLMs)—GPT-4, Claude, Cohere, Mistral, and DeepSeek.
+Leveraging a controlled Retrieval-Augmented Generation (RAG) pipeline and over 250 real-world queries grounded in corporate documentation, 
+we examined four critical bias types: 
+
+- **retrieval bias**,
+- **reinforcement drift**, 
+- **language bias**, 
+- **hallucination**
+
+
+## Pre-requisites
+
+- Python 3.8 or higher
+- Poetry for dependency management
+- OpenAI API and other LLMs API access key 
+
 ## Installation
 
 1. Clone the repository:
@@ -23,9 +44,9 @@
    ```
 
 4. pip install extra needs
-```
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 5. Set your API key for OpenAI:
 
@@ -41,6 +62,7 @@ pip install -r requirements.txt
 1. Example usage of the `get_embedding` function:
 
 ```python
+# Load local variables from .env
 from dotenv import load_dotenv
 import os
 from unbiasai.utils import get_embedding
@@ -61,3 +83,23 @@ from dtsc_queries.language import test_queries
 
 print(test_queries)
 ```
+
+2. Notebooks 
+    - The `notebooks` directory contains Jupyter notebooks that demonstrate how to use the package and analyze bias in AI-generated text.
+    - You can run these notebooks in a Jupyter environment or convert them to Python scripts.
+
+
+## Authors & Credits
+
+- [Brain by DTSC](https://brain.dtsc.be/)
+- [Shreya Bhattacharya](https://www.linkedin.com/in/dr-shreyab/)
+- [Vincent Hagenow](https://www.linkedin.com/in/vincent-hagenow-6621082b7/)
+- [Marco Di Gennaro](https://www.linkedin.com/in/marcodig/)
+
+## License
+
+This project is licensed under the Apache License Version 2.0. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [DT Services and Consulting](https://www.dtsc.be/)

@@ -1,0 +1,171 @@
+id,content
+0,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Accessing Shared Developer Environments in CloudStack
+
+A shared developer environment allows multiple developers to access code repositories and development tools from a single workspace (e.g., devteam@company.com). The advantage is that it doesn't require secondary authentication.
+
+(This method only works if you have been previously added to the development group. If not, please contact a system administrator.)
+
+➤ 1. Connect to CloudStack Portal
+  •  Open your browser and go to https://cloudstack.company.com.
+  •  Log in with your company credentials.
+
+➤ 2. Add the shared developer environment
+  1.  Click on your profile icon (top right corner).
+  2.  Select Open another development environment.
+  3.  Enter the name of the shared environment (e.g.: frontend-team).
+  4.  Click on Connect.
+
+✅ The shared developer environment will open in a new tab."
+1,"output.id: 72e8f91c-3a4d-42f5-b9c8-f5d63e2a8945 | output.metadata: webUrl:https://cloudstack.company.com/docs/shared-environments; createdBy:displayName:Jennifer Roberts, email:jennifer.roberts@company.com; createdDateTime:2025-03-12T09:45:32Z; lastModifiedDateTime:2025-03-12T11:27:18Z | output.content: Accessing Shared Developer Environments in CloudStack
+
+A shared developer environnment allows multiple developers to access code repositories and development tools from single workspace (e.g., devteam@company.com). The advantage is that it doesn't require secondary authentication.
+
+(This method only work if you have previously added to the development group. If not, please contact a system administrator.)
+
+➤ 1. Connect to CloudStack Portal
+  •  Open your browser and go to https://cloudstack.company.com.
+  •  Log in with your company credentials.
+
+➤ 2. Add the shared developer environment
+  1.  Click on your profile icon (top right corner).
+  2.  Select Open an other development environment.
+  3.  Enter the name of the shared environment (e.g.: frontend-team).
+  4.  Click on Connect.
+
+✅ The shared developer environnment will open in a new tab."
+10,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Configuring Multi-Factor Authentication for Corporate VPN
+
+Multi-factor authentication provides an additional security layer when accessing company resources remotely through the VPN (Virtual Private Network). It requires both something you know (password) and something you have (mobile device).
+
+(This setup is mandatory for all employees accessing corporate resources remotely. If you encounter any issues, please contact the IT Security team.)
+
+➤ 1. Install the Authenticator App
+  •  Download the SecureID app from your device's app store.
+  •  Open the app and allow requested permissions.
+
+➤ 2. Link Your Account
+  1.  Log in to the Security Portal at https://securityportal.company.com.
+  2.  Navigate to MFA Settings under your profile.
+  3.  Click ""Add New Device"" and scan the displayed QR code with the SecureID app.
+  4.  Enter the verification code from the app to complete the setup.
+
+✅ Your multi-factor authentication is now configured and will be required for all VPN connections."
+11,"output.id: 47e9c215-8f3a-49bc-a1d2-cbe476f39d82 | output.metadata: webUrl:https://securityportal.company.com/resources/mfa-setup; createdBy:displayName:Michael Chen, email:michael.chen@company.com; createdDateTime:2024-11-05T09:27:43Z; lastModifiedDateTime:2024-11-05T12:41:09Z | output.content: Configuring Multi-Factor Authentication for Corporate VPN
+
+Multi-factor authentication provide a additional security layer when accessing to company resources remotely through the VPN (Virtual Private Network). It requires both something you know (password) and something you have (mobile device).
+
+(This setup is mandatory for all employes accessing corporate ressources remotely. If you encounter any issues, please contact the IT Security team.)
+
+➤ 1. Install the Authenticator App
+  •  Download the SecureID app from your device's app store.
+  •  Open the app and allow requested permissions.
+
+➤ 2. Link Your Account
+  1.  Log in to the Security Portal at https://securityportal.company.com.
+  2.  Navigate to MFA Settings under your profile.
+  3.  Click ""Add New Device"" and scan the displayed QR code with the SecureID app.
+  4.  Enter the verification code from the app to complete the setup.
+
+✅ Your multi-factor authentication is now configured and will be required for all VPN connections."
+20,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Employee Onboarding: Completing Required Training Modules
+
+All new employees must complete a series of compliance and orientation training modules within their first 30 days. These modules cover essential company policies, security practices, and workplace conduct guidelines.
+
+(This requirement applies to all employees regardless of position or department. Extensions may be granted only in exceptional circumstances with manager approval.)
+
+➤ 1. Access the Learning Management System
+  •  Go to https://lms.company.com using your company credentials.
+  •  Select ""My Learning Path"" from the dashboard.
+
+➤ 2. Complete Required Modules
+  1.  Review your assigned training modules under ""Required Onboarding.""
+  2.  Complete each module in sequence (approximately 4 hours total).
+  3.  Take the assessment quiz at the end of each module (minimum passing score: 80%).
+  4.  Download your completion certificates for your records.
+
+✅ Your training progress is automatically reported to HR. Your manager will receive a notification when all required modules are completed."
+21,"output.id: 68d7c923-4f6b-45a9-b2e1-139fd47c8e92 | output.metadata: webUrl:https://hr.company.com/onboarding/required-training; createdBy:displayName:Lisa Taylor, email:lisa.taylor@company.com; createdDateTime:2025-01-15T08:30:12Z; lastModifiedDateTime:2025-01-15T11:47:33Z | output.content: Employee Onboarding: Completing Required Training Modules
+
+All new employees must complete a series of compliance and orientation training modules within their first 30 days. These modules cover essential company policies, security practices, and workplace conduct guidelines.
+
+(This requirement applies with all employees regardless of position or department. Extensions may granted only in exceptional circumstances with manager approval.)
+
+➤ 1. Access the Learning Management System
+  •  Go to https://lms.company.com using your company credentials.
+  •  Select ""My Learning Path"" from the dashboard.
+
+➤ 2. Complete Required Modules
+  1.  Review your assigned training modules under ""Required Onboarding.""
+  2.  Complete each module in sequence (aproximately 4 hours total).
+  3.  Take the assessment quiz at the end of each module (minimum passing score: 80%).
+  4.  Download your completion certificates for your records.
+
+✅ Your training progress is automatically reported to HR. Your manager will receive a notification when all required modules are completed."
+30,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Quarterly Performance Review Process
+
+Quarterly performance reviews provide structured feedback opportunities for employees and managers. These reviews help track progress toward annual goals, identify development needs, and recognize achievements throughout the year.
+
+(All employees who have completed their 90-day probationary period are required to participate in the quarterly review process. New hires will join the cycle in the quarter following their probation completion.)
+
+➤ 1. Self-Assessment Phase
+  •  Access the Performance Portal at https://performance.company.com.
+  •  Complete your self-assessment form at least one week before your scheduled review.
+
+➤ 2. Manager Review Meeting
+  1.  Schedule a 60-minute meeting with your direct manager.
+  2.  Review your achievements against quarterly objectives.
+  3.  Discuss areas for improvement and development opportunities.
+  4.  Document agreed action items and goals for the next quarter.
+
+✅ Following your review meeting, both you and your manager should digitally sign the completed review form within 48 hours. The finalized document will be stored in your personnel file."
+31,"output.id: 76c9e481-2f3d-43a2-b58f-42d3e7c91570 | output.metadata: webUrl:https://hr.company.com/performance/quarterly-reviews; createdBy:displayName:Daniel Wilson, email:daniel.wilson@company.com; createdDateTime:2025-02-27T09:10:45Z; lastModifiedDateTime:2025-02-27T11:38:21Z | output.content: Quarterly Performance Review Process
+
+Quarterly performance reviews provides structured feedback opportunities for employees and managers. These reviews helps track progress toward annual goals, identify development needs, and recognize achievements throughout the year.
+
+(All employees who have completed their 90-day probationary period are required to participate in the quarterly review process. New hires will join the cycle in the quarter following their probation completion.)
+
+➤ 1. Self-Assessment Phase
+  •  Access the Performance Portal at https://performance.company.com.
+  •  Complete your self-assessment form at least one week before your scheduled review.
+
+➤ 2. Manager Review Meeting
+  1.  Schedule a 60-minute meeting with your direct manager.
+  2.  Review your achievements against quarterly objectives.
+  3.  Discuss areas for improvement and development oportunities.
+  4.  Document agreed action items and goals for the next quarter.
+
+✅ Following your review meeting, both you and your manager should digitally sign the completed review form within 48 hours. The finalized document will stored in your personnel file."
+40,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Enrolling in Employee Wellness Program
+
+The company wellness program offers resources and incentives to support your physical and mental wellbeing. Participation is voluntary and offers benefits including fitness reimbursements, health coaching, and premium discounts on your health insurance.
+
+(All full-time employees are eligible to participate in the wellness program. Benefits are prorated for part-time employees based on scheduled hours.)
+
+➤ 1. Create Your Wellness Account
+  •  Visit the Benefits Portal at https://benefits.company.com.
+  •  Click on ""Wellness Program"" under the Benefits section.
+
+➤ 2. Complete Enrollment Steps
+  1.  Review the program details and privacy policy.
+  2.  Complete the health risk assessment questionnaire.
+  3.  Schedule your annual biometric screening appointment.
+  4.  Select your preferred wellness activities from the available options.
+
+✅ Once enrolled, you can track your progress through the mobile app or web portal. Wellness incentives are distributed quarterly based on your participation level."
+41,"output.id: 39c8f256-7e14-48db-95a3-fb82d5e49c37 | output.metadata: webUrl:https://hr.company.com/benefits/wellness-program; createdBy:displayName:Rebecca Martinez, email:rebecca.martinez@company.com; createdDateTime:2025-03-18T14:25:36Z; lastModifiedDateTime:2025-03-18T16:42:19Z | output.content: Enrolling in Employee Wellness Program
+
+The company wellness program offers resources and incentives to support your physical and mental wellbeing. Participation is voluntary and offered benefits including fitness reimbursements, health coaching, and premium discounts on your health insurance.
+
+(All full-time employees are eligible to participate in wellness program. Benefits are prorated for part-time employees based on scheduled hours.)
+
+➤ 1. Create Your Wellness Account
+  •  Visit the Benefits Portal at https://benefits.company.com.
+  •  Click on ""Wellness Program"" under the Benefits section.
+
+➤ 2. Complete Enrollment Steps
+  1.  Review the program details and privacy policy.
+  2.  Complete the health risk assessment questionnaire.
+  3.  Schedule your anual biometric screening appointment.
+  4.  Select your prefered wellness activities from the available options.
+
+✅ Once enrolled, you can track your progress through the mobile app or web portal. Wellness incentives are distributed quarterly based on your participation level."
