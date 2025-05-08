@@ -8,7 +8,7 @@ __pycache__/
 .venv/
 *.env
 .env.*
-## To uncomment before publishing ## .env
+.env
 
 # VS Code IDE files
 .vscode/
