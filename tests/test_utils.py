@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from src.unbiasai.utils import generate_embedding
-from src.unbiasai.utils import initialize_llm
+from unbiasai.utils import generate_embeddings
+from unbiasai.utils import initialize_llm
 
 @patch('src.unbiasai.utils.OpenAIEmbeddings')
 def test_generate_embedding(mock_openai_embeddings):
