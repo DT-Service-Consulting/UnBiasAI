@@ -6,10 +6,7 @@ from langchain_deepseek import ChatDeepSeek
 from langchain_cohere import ChatCohere
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage, HumanMessage
 import os
-import re
-from datetime import datetime
 
 
 def generate_embeddings(text):
@@ -41,13 +38,13 @@ def generate_embeddings(text):
         raise Exception("OPENAI_API_KEY environment variable not set")
 
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
-                                   model="text-embedding-3-large")
+                                   model="text-embedding-3-small")
 
     return embeddings.embed_query(text)
 
 
 
-def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"):
+def insert_documents(df: pd.DataFrame, client, table_name: str = "retrieval_Recency"):
     """
     Insert documents from a pandas DataFrame into a database table.
 
@@ -101,7 +98,7 @@ def initialize_llm(model_name, api_key):
         llm = ChatAnthropic(model="claude-3-7-sonnet-latest",
                             anthropic_api_key=api_key)
     elif model_name == "mistral":
-        llm = ChatMistralAI(model="mistral-small-latest",
+        llm = ChatMistralAI(model="mistral-large-latest",
                             mistral_api_key=api_key)
     elif model_name == "cohere":
         llm = ChatCohere(model="command-a-03-2025",
@@ -114,12 +111,13 @@ def initialize_llm(model_name, api_key):
     print(f'LLM initialized correctly: {model_name}, llm: {llm}')
     return llm
 
-def get_documents_from_supabase(query, supabase_client, function_name='match_documents_recency_no_filter', k=10):
+# VH: replaces retrieve function
+def get_documents_from_supabase(query, k=10):
     """Get document embeddings from Supabase."""
     try:
-        query_embedding = generate_embeddings(query)
-        response = supabase_client.rpc(
-            function_name,
+        query_embedding = get_embedding(query)
+        response = supabase.rpc(
+            'match_documents_recency_no_filter',
             {
                 'query_embedding': query_embedding,
                 'match_count': k
@@ -129,6 +127,7 @@ def get_documents_from_supabase(query, supabase_client, function_name='match_doc
         if not response.data or len(response.data) == 0:
             print("No relevant documents found.")
             return []
+            
         return response.data
     except Exception as e:
         print(f"Error retrieving documents: {e}")
@@ -203,7 +202,7 @@ def format_results(docs):
     ]
 
 
-def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
+def retrieve(query, llm, k=10, re_rank=False):
     """
     Retrieve top-k documents for a query using Supabase vector search with optional LLM re-ranking.
     Parameters:
@@ -215,7 +214,7 @@ def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
     List[dict]: A list of dictionaries with document 'id', 'rank', and 'content'.
     """
     # Step 1: Get raw documents from Supabase
-    raw_docs = get_documents_from_supabase(query, supabase_client, function_name, k)
+    raw_docs = get_documents_from_supabase(query, k)
     if not raw_docs:
         return []
 
@@ -229,16 +228,3 @@ def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
 
     # Step 4: Format and return results
     return format_results(docs)
-
-
-def extract_created_datetime(content, pattern=r'createdDateTime[":]*(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)'):
-    # Try the pattern
-    match = re.search(pattern, content)
-    if match:
-        # Handle both with and without milliseconds
-        datetime_str = match.group(1)
-        if '.' in datetime_str:
-            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-        else:
-            return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%SZ")
-    return None
