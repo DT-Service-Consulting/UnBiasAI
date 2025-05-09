@@ -523,3 +523,185 @@ def run_experiment():
         print(f"To download the log file, use the Files panel on the left sidebar.")
 
     return response_logs_by_question, response_df
+
+# Reinforcement
+def compute_response_drift_score(responses):
+    if len(responses) < 2:
+        return 0, []
+
+    base_embedding = get_embedding.encode(responses[0])
+    scores = []
+    for r in responses[1:]:
+        emb = get_embedding.encode(r)
+        sim = cosine_similarity([base_embedding], [emb])[0][0]
+        drift_score = 1 - sim
+        scores.append(drift_score)
+    return np.mean(scores), scores
+
+
+
+# @title  Step 9: Drift Analysis
+
+
+def compute_response_drift_score(responses):
+    """Calculate drift between consecutive responses using embeddings"""
+    if len(responses) < 2:
+        return 0, []
+
+    # Get embeddings for all responses using the existing get_embedding function
+    embeddings = [get_embedding(r) for r in responses]
+
+    # Calculate cosine similarity between consecutive responses
+    scores = []
+    for i in range(1, len(embeddings)):
+        # Use numpy arrays for cosine similarity calculation
+        emb1 = np.array(embeddings[i-1]).reshape(1, -1)
+        emb2 = np.array(embeddings[i]).reshape(1, -1)
+
+        similarity = cosine_similarity(emb1, emb2)[0][0]
+        # Convert similarity to drift (1 - similarity)
+        drift = 1 - similarity
+        scores.append(drift)
+
+    avg_drift = sum(scores) / len(scores) if scores else 0
+    return avg_drift, scores
+
+
+def analyze_drift(response_logs):
+    print("\n📊 Calculating Response Drift Scores...")
+    drift_logs = {}
+
+    for llm in llm_models:
+        # Skip if we don't have enough responses
+        if len(response_logs[llm]) < 2:
+            print(f"{llm}: Not enough responses to calculate drift")
+            drift_logs[llm] = []
+            continue
+
+        avg_drift, all_drifts = compute_response_drift_score(response_logs[llm])
+        drift_logs[llm] = all_drifts
+        print(f"{llm} Average Drift: {avg_drift:.4f}")
+
+    # Perform ANOVA only on models with sufficient data
+    valid_models = [llm for llm in llm_models if len(drift_logs[llm]) > 1]
+    if len(valid_models) > 1:
+        anova_data = [drift_logs[llm] for llm in valid_models if len(drift_logs[llm]) > 0]
+        if len(anova_data) > 1 and all(len(d) > 0 for d in anova_data):
+            anova_result = f_oneway(*anova_data)
+            print(f"\n📈 ANOVA F-statistic: {anova_result.statistic:.4f}, p-value: {anova_result.pvalue:.4f}")
+            if anova_result.pvalue < 0.05:
+                print("🎯 Statistically significant difference in drift detected!")
+            else:
+                print("✅ No significant difference in drift across LLMs.")
+
+    # Plot drift over time
+    plt.figure(figsize=(12, 6))
+    for llm in drift_logs:
+        if len(drift_logs[llm]) > 0:  # Only plot if we have data
+            plt.plot(range(1, len(drift_logs[llm])+1), drift_logs[llm], marker='o', label=llm)
+
+    plt.xlabel("Iteration")
+    plt.ylabel("Drift Score (1 - cosine similarity)")
+    plt.title("Response Drift Over Time Across Different LLMs")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig("drift_analysis.png")  # Save figure
+    plt.show()
+
+    return drift_logs
+
+
+def generate_report(drift_logs):
+    print("\n📋 Generating Summary Report...")
+
+    # Calculate statistics per model
+    model_stats = {}
+    for llm in llm_models:
+       # Calculate average drift
+        avg_drift = np.mean(drift_logs[llm]) if len(drift_logs[llm]) > 0 else 0
+
+        model_stats[llm] = {
+            'provider': llm_models[llm]['provider'],
+            'model': llm_models[llm]['model'],
+            'avg_drift': avg_drift
+        }
+
+    # Create summary dataframe
+    summary_df = pd.DataFrame.from_dict(model_stats, orient='index').reset_index()
+    summary_df = summary_df.rename(columns={'index': 'llm'})
+
+    # Sort by feedback score (descending)
+    summary_df = summary_df.sort_values('feedback_score', ascending=False)
+
+    # Save summary
+    summary_filename = "llm_performance_summary.csv"
+    summary_df.to_csv(summary_filename, index=False)
+    print(f"✅ Summary report saved to '{summary_filename}'")
+
+    # For Google Colab: Allow downloading the file
+    try:
+        files.download(summary_filename)
+    except:
+        print(f"To download the summary file, use the Files panel on the left sidebar.")
+
+    # Print summary
+    print("\n📊 LLM Performance Summary:")
+    display(summary_df[['llm', 'avg_drift']])
+
+    return summary_df
+
+def run_reinforcement_experiment():
+    print("🔄 Starting Multi-LLM RAG Drift Analysis Experiment")
+
+    # Check if API keys are provided
+    missing_keys = []
+    if use_claude and not CLAUDE_API_KEY: missing_keys.append("Anthropic (Claude)")
+    if use_openai and not OPENAI_API_KEY: missing_keys.append("OpenAI")
+    if use_mistral and not MISTRAL_API_KEY: missing_keys.append("Mistral")
+    if use_cohere and not COHERE_API_KEY: missing_keys.append("Cohere")
+    if use_deepseek and not DEEPSEEK_API_KEY: missing_keys.append("DeepSeek")
+
+    if missing_keys:
+        print(f"❌ Missing API keys for: {', '.join(missing_keys)}")
+        print("Please provide the required API keys and run again.")
+        return
+
+    # Check if any models are selected
+    if not llm_models:
+        print("❌ No LLM models selected. Please select at least one model.")
+        return
+
+    # Check if Supabase connection works
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        print("❌ Missing Supabase credentials. Please provide URL and key.")
+        return
+
+    try:
+        test_query = "test connection"
+        test_context = retrieve_context(test_query, top_k=1)
+        print("✅ Supabase connection successful")
+    except Exception as e:
+        print(f"❌ Supabase connection failed: {e}")
+        print("Please check your Supabase credentials and try again.")
+        return
+
+    # Print active models
+    print("\n🤖 Active models for this experiment:")
+    for llm, config in llm_models.items():
+        print(f"  - {llm} ({config['provider']}: {config['model']})")
+
+    # Run the experiment
+    start_time = time.time()
+    response_logs = run_experiment()
+    data = pd.DataFrame(response_logs)
+    data.to_csv("response_logs.csv", index=False)
+    drift_logs = analyze_drift(response_logs)
+    summary_df = generate_report(drift_logs)
+
+    # Calculate and display execution time
+    execution_time = time.time() - start_time
+    print(f"\n✅ Experiment completed in {execution_time:.2f} seconds")
+
+    return summary_df
+
