@@ -327,3 +327,199 @@ def detect_language(content):
         return detect(content)
     except Exception:
         return None
+
+# hallucination
+def retrieve_context(query, top_k):
+    """Retrieve relevant documents from Supabase vector store using OpenAI embeddings and RPC with filter support"""
+    try:
+        # Get embedding for the query using OpenAI
+        query_embedding = generate_embeddings(query)
+
+        # Call the custom Supabase function via RPC with filter
+        response = supabase.rpc(
+            'match_documents',
+            {
+                'query_embedding': query_embedding,
+                'match_count': top_k,
+                'filter': {}  # You can pass filters here later if needed
+            }
+        ).execute()
+
+        if not response.data or len(response.data) == 0:
+            return "No relevant context found in the knowledge base."
+
+        # Format retrieved documents as context
+        context = "Context from knowledge base:\n\n"
+        for i, doc in enumerate(response.data):
+            content = doc.get('content', '')
+            source = doc.get('source', 'Unknown source')
+            context += f"Document {i+1}: {content}\nSource: {source}\n\n"
+
+        return context
+
+    except Exception as e:
+        print(f"Error retrieving from vector store: {e}")
+        return "Error retrieving context from knowledge base."
+
+
+def query_llm_with_rag(llm_config, query):
+    provider = llm_config["provider"]
+    model = llm_config["model"]
+
+    # Retrieve relevant context from Supabase
+    context = retrieve_context(query)
+
+    # Construct RAG prompt with retrieved context
+    rag_prompt = f"""
+{context}
+
+Based on the above context from our knowledge base, please answer the following question:
+{query}
+
+If the context doesn't contain relevant information to answer the question,
+please say so and answer based on your general knowledge.
+"""
+
+    try:
+        # Call the appropriate API based on provider
+        if provider == "openai":
+            # Updated OpenAI client API call for v1.0+
+            response = openai.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": rag_prompt}],
+                temperature=temperature
+            )
+            return response.choices[0].message.content.strip()
+
+        elif provider == "anthropic":
+            response = anthropic_client.messages.create(
+                model=model,
+                messages=[{"role": "user", "content": rag_prompt}],
+                max_tokens=1000,
+                temperature=temperature
+            )
+            return response.content[0].text
+
+        elif provider == "cohere":
+            response = cohere_client.chat(
+                message=rag_prompt,
+                model=model,
+                temperature=temperature
+            )
+            return response.text
+
+        elif provider == "mistral":
+            headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": f"Bearer {MISTRAL_API_KEY}"
+            }
+            payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": rag_prompt}],
+                "temperature": temperature
+            }
+            response = requests.post(
+                "https://api.mistral.ai/v1/chat/completions",
+                headers=headers,
+                json=payload
+            )
+            return response.json()["choices"][0]["message"]["content"].strip()
+
+        elif provider == "deepseek":
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {DEEPSEEK_API_KEY}"
+            }
+            payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": rag_prompt}],
+                "temperature": temperature
+            }
+            response = requests.post(
+                "https://api.deepseek.com/v1/chat/completions",
+                headers=headers,
+                json=payload
+            )
+            return response.json()["choices"][0]["message"]["content"].strip()
+
+        else:
+            return f"Error: Unsupported provider {provider}"
+
+    except Exception as e:
+        return f"Error with {provider} ({model}): {str(e)}"
+
+
+def run_experiment():
+    # Track unique questions and their repetitions
+    unique_questions = {}  # Maps question text to question base ID
+    question_counts = {}   # Tracks how many times each unique question has been asked
+
+    response_logs_by_question = {}
+    df_data = []
+
+    for i, question in enumerate(questions):
+        # Check if this is a repetition of a previous question
+        if question in unique_questions:
+            base_question_id = unique_questions[question]
+            question_counts[question] += 1
+            repetition_num = question_counts[question]
+            question_id = f"{base_question_id}_{repetition_num}"  # e.g., "q1_2" for second repetition
+        else:
+            # First time seeing this question
+            base_question_id = f"q{len(unique_questions) + 1}"
+            unique_questions[question] = base_question_id
+            question_counts[question] = 1
+            repetition_num = 1
+            question_id = f"{base_question_id}_{repetition_num}"  # e.g., "q1_1" for first instance
+
+        print(f"\n Iteration {i+1}/{len(questions)} — Question: {question} (ID: {question_id})")
+
+        # Initialize the entry for this question instance
+        response_logs_by_question[question_id] = {
+            "question_text": question,
+            "base_question_id": base_question_id,
+            "repetition_num": repetition_num,
+            "responses": {llm: [] for llm in llm_models}
+        }
+
+        for llm_name, config in llm_models.items():
+            print(f"\n {llm_name} is generating a response...")
+            try:
+                response = query_llm_with_rag(config, question)
+                #print(f" {llm_name} says:\n{response}\n")
+
+                # Store the response in the nested structure
+                response_logs_by_question[question_id]["responses"][llm_name].append(response)
+
+                # Add row to DataFrame data
+                df_data.append({
+                    "question_id": question_id,
+                    "base_question_id": base_question_id,
+                    "repetition_num": repetition_num,
+                    "question_text": question,
+                    "llm": llm_name,
+                    "response": response,
+                    "iteration": i+1
+                })
+
+                # Add a small delay to avoid rate limits
+                time.sleep(1)
+
+            except Exception as e:
+                print(f" Error with {llm_name}: {e}")
+
+    # Create DataFrame from collected data
+    response_df = pd.DataFrame(df_data)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"llm_rag_drift_log_{timestamp}.csv"
+    response_df.to_csv(filename, index=False)
+    print(f"\n✅ Log saved to '{filename}'")
+
+    # For Google Colab: Allow downloading the file
+    try:
+        files.download(filename)
+    except:
+        print(f"To download the log file, use the Files panel on the left sidebar.")
+
+    return response_logs_by_question, response_df
