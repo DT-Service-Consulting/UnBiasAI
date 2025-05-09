@@ -6,6 +6,7 @@ from langchain_deepseek import ChatDeepSeek
 from langchain_cohere import ChatCohere
 from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
+from langchain_mistralai import  ChatMistralAI
 from langchain.schema import SystemMessage, HumanMessage
 import os
 import re
@@ -39,7 +40,7 @@ def generate_embeddings(text):
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if not openai_api_key:
         raise Exception("OPENAI_API_KEY environment variable not set")
-
+    print("OpenAI API Key: {}".format(openai_api_key))
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
                                    model="text-embedding-3-large")
 
@@ -91,27 +92,34 @@ def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"
 
 
 
-def initialize_llm(model_name, api_key):
+def initialize_llm(model_name):
     # Initialize LLM
     model_name = model_name.lower()
+    print(f"Initializing model: {model_name}")
     if model_name == "gpt":
+        api_key = os.getenv("OPENAI_API_KEY")
         llm = ChatOpenAI(model_name="gpt-4o-2024-11-20",
                          openai_api_key=api_key)
     elif model_name == "claude":
+        api_key = os.getenv("ANTHROPIC_API_KEY")
         llm = ChatAnthropic(model="claude-3-7-sonnet-latest",
                             anthropic_api_key=api_key)
     elif model_name == "mistral":
+        api_key = os.getenv("MISTRAL_API_KEY")
         llm = ChatMistralAI(model="mistral-small-latest",
                             mistral_api_key=api_key)
     elif model_name == "cohere":
+        api_key = os.getenv("COHERE_API_KEY")
         llm = ChatCohere(model="command-a-03-2025",
                          cohere_api_key=api_key)
     elif model_name == "deepseek":
+        api_key = os.getenv("DEEPSEEK_API_KEY")
         llm = ChatDeepSeek(model="deepseek-chat")
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
-    print(f'LLM initialized correctly: {model_name}, llm: {llm}')
+    print(f'    LLM initialized correctly: {llm}')
+
     return llm
 
 def get_documents_from_supabase(query, supabase_client, function_name='match_documents_recency_no_filter', k=10):

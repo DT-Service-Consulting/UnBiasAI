@@ -3,5 +3,6 @@ langchain
 langchain-anthropic
 langchain-cohere
 langchain-deepseek
+langchain_mistralai
 langchain-openai
 supabase
