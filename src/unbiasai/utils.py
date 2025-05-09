@@ -46,7 +46,6 @@ def generate_embeddings(text):
     return embeddings.embed_query(text)
 
 
-
 def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"):
     """
     Insert documents from a pandas DataFrame into a database table.
@@ -78,6 +77,7 @@ def insert_documents(df: pd.DataFrame, client, table_name: str = "unbiasai_test"
     >>> client = Client()
     >>> insert_documents(df, client, table_name="my_table")
     """
+
     for index, row in df.iterrows():
         print(f"Inserting document with ID: {int(row['id'])}")
         data = {
