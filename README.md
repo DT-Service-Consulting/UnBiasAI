@@ -84,7 +84,31 @@ from dtsc_queries.language import test_queries
 print(test_queries)
 ```
 
-2. Notebooks 
+2. Connect to the supabase database
+
+``` python
+from dotenv import load_dotenv
+from supabase import create_client, Client
+from unbiasai.config import ENVFILE
+load_dotenv(ENVFILE)
+
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
+```
+
+3. Load and initialize all LLMs
+
+```python
+from unbiasai.utils import initialize_llm
+
+initialized_models = {}
+
+for model_name in ["gpt", "mistral", "cohere", "deepseek"]:
+    initialized_models[model_name] = initialize_llm(model_name)
+```
+
+4. Notebooks 
     - The `notebooks` directory contains Jupyter notebooks that demonstrate how to use the package and analyze bias in AI-generated text.
     - You can run these notebooks in a Jupyter environment or convert them to Python scripts.
 
