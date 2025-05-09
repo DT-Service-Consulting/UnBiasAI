@@ -11,9 +11,10 @@ load_dotenv()
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-# Shreya's
+# Shreya's URL
 # SUPABASE_URL = "https://rrjbrtbsvdoxndchvchq.supabase.co"
-SUPABASE_URL = 'https://wuxtoyrimqwohizxcmzf.supabase.co'
+# Vincent's URL
+SUPABASE_URL = "https://wuxtoyrimqwohizxcmzf.supabase.co"
 
 def create_supabase_client():
     # Create a Supabase client using the URL and key
@@ -21,7 +22,7 @@ def create_supabase_client():
     # Initialize your embeddings using the new import:
     embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
     # Define the table name where your documents will be stored.
-    table_name = "retrieval_recency"
+    table_name = "unbiasai_test" # new table name
     # Create the Supabase vector store by providing the client, embeddings, and table_name.
     vector_store = SupabaseVectorStore(client=supabase_client, embedding=embeddings, table_name=table_name)
 
