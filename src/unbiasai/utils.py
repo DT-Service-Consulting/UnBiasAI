@@ -242,3 +242,80 @@ def extract_created_datetime(content, pattern=r'createdDateTime[":]*(\d{4}-\d{2}
         else:
             return datetime.strptime(datetime_str, "%Y-%m-%dT%H:%M:%SZ")
     return None
+
+# length
+def analyze_content_word_count(df):
+    """
+    Analyzes content column and counts words after "output.content: "
+
+    Parameters:
+    df (pandas.DataFrame): DataFrame with a 'content' column
+
+    Returns:
+    pandas.DataFrame: DataFrame with 'word_count' column added
+    """
+    # Create a copy of the dataframe
+    result_df = df.copy()
+
+    # Count words after marker
+    def count_words(text):
+        if not isinstance(text, str):
+            return 0
+
+        marker = "output.content: "
+        pos = text.find(marker)
+
+        if pos == -1:
+            return len(text.split())  # Count all words if marker not found
+
+        # Extract content after marker and count words
+        content_after_marker = text[pos + len(marker):]
+        return len(content_after_marker.split())
+
+    # Apply word counting
+    result_df['word_count'] = result_df['content'].apply(count_words)
+
+    return result_df
+
+
+def categorize_word_count(df):
+    """
+    Categorizes an existing word_count column as 'short', 'medium', or 'long'
+    within each Model and Query group based on relative length.
+
+    Parameters:
+    df (pandas.DataFrame): DataFrame with 'word_count', 'Model', and 'Query' columns
+
+    Returns:
+    pandas.DataFrame: DataFrame with 'length_category' column added
+    """
+    result_df = df.copy()
+
+    # Define the length categories
+    length_categories = ['short', 'medium', 'long']
+
+    # Sort and assign length categories within each group
+    result_df['length_category'] = (
+        result_df.sort_values(by='word_count', ascending=True)
+        .groupby(['Model', 'Query'])
+        .cumcount()
+        .apply(lambda x: length_categories[min(x, len(length_categories)-1)])
+    )
+
+    return result_df
+
+# language
+def detect_language(content):
+    """
+    Detects the language of a given text content.
+
+    Args:
+        content (str): The text to analyze.
+
+    Returns:
+        str: Detected language code (e.g., 'en', 'fr', 'de', 'nl'), or None if detection fails.
+    """
+    try:
+        return detect(content)
+    except Exception:
+        return None
