@@ -12,9 +12,9 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Shreya's URL
-# SUPABASE_URL = "https://rrjbrtbsvdoxndchvchq.supabase.co"
+SUPABASE_URL = "https://rrjbrtbsvdoxndchvchq.supabase.co"
 # Vincent's URL
-SUPABASE_URL = "https://wuxtoyrimqwohizxcmzf.supabase.co"
+# SUPABASE_URL = "https://wuxtoyrimqwohizxcmzf.supabase.co"
 
 def create_supabase_client():
     # Create a Supabase client using the URL and key
