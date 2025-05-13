@@ -40,10 +40,8 @@ def generate_embeddings(text):
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if not openai_api_key:
         raise Exception("OPENAI_API_KEY environment variable not set")
-    print("OpenAI API Key: {}".format(openai_api_key))
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
                                    model="text-embedding-3-large")
-
     return embeddings.embed_query(text)
 
 
