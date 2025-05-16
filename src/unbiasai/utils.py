@@ -1,4 +1,5 @@
 # New package as per deprecation warning
+from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 import pandas as pd
 import langchain_openai
@@ -40,7 +41,6 @@ def generate_embeddings(text):
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if not openai_api_key:
         raise Exception("OPENAI_API_KEY environment variable not set")
-    print("OpenAI API Key: {}".format(openai_api_key))
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key,
                                    model="text-embedding-3-large")
 
@@ -118,22 +118,22 @@ def initialize_llm(model_name):
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
-    print(f'    LLM initialized correctly: {llm}')
+    print(f'    LLM initialized correctly')
 
     return llm
 
 def get_documents_from_supabase(query, supabase_client, function_name='match_documents_recency_no_filter', k=10):
     """Get document embeddings from Supabase."""
-    try:
-        query_embedding = generate_embeddings(query)
-        response = supabase_client.rpc(
+    query_embedding = generate_embeddings(query)
+    print(f"Query: {query}, Embedding: {query_embedding}")
+    response = supabase_client.rpc(
             function_name,
             {
                 'query_embedding': query_embedding,
                 'match_count': k
             }
         ).execute()
-        
+    try:
         if not response.data or len(response.data) == 0:
             print("No relevant documents found.")
             return []
