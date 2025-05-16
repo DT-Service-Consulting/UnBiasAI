@@ -122,12 +122,11 @@ def initialize_llm(model_name):
 
     return llm
 
-def get_documents_from_supabase(query, supabase_client, function_name='match_documents_recency_no_filter', k=10):
+def get_documents_from_supabase(query, supabase_client, k=10):
     """Get document embeddings from Supabase."""
     query_embedding = generate_embeddings(query)
-    print(f"Query: {query}, Embedding: {query_embedding}")
     response = supabase_client.rpc(
-            function_name,
+            "match_documents_recency_no_filter",
             {
                 'query_embedding': query_embedding,
                 'match_count': k
@@ -211,7 +210,7 @@ def format_results(docs):
     ]
 
 
-def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
+def retrieve(query, llm, supabase_client, k=10, re_rank=False):
     """
     Retrieve top-k documents for a query using Supabase vector search with optional LLM re-ranking.
     Parameters:
@@ -223,7 +222,7 @@ def retrieve(query, llm, supabase_client, function_name, k=10, re_rank=False):
     List[dict]: A list of dictionaries with document 'id', 'rank', and 'content'.
     """
     # Step 1: Get raw documents from Supabase
-    raw_docs = get_documents_from_supabase(query, supabase_client, function_name, k)
+    raw_docs = get_documents_from_supabase(query, supabase_client, k)
     if not raw_docs:
         return []
 
