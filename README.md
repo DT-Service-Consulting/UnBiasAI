@@ -37,7 +37,7 @@ we examined four critical bias types:
    - `Project URL`
    - `anon` or `service_role` API Key
   
-** Step 2: Enable pgvector and Create Table**
+**Step 2: Enable pgvector and Create Table**
 
 1. In your Supabase project, go to **SQL Editor**.
 2. Paste and run the following SQL:
@@ -95,7 +95,7 @@ OPENAI_KEY = userdata.get("OPENAI_API_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 openai.api_key = OPENAI_KEY
 ```
-** Step 6: Define Functions to Embed and Insert Data**
+**Step 6: Define Functions to Embed and Insert Data**
 ```
 def get_embedding(text, model="text-embedding-3-small"):
     response = openai.embeddings.create(input=[text], model=model)
@@ -108,7 +108,7 @@ def insert_document(text):
         "embedding": embedding
     }).execute()
 ```
-** Step 7: Define Retrieval Function
+**Step 7: Define Retrieval Function**
 ```
 def search_documents(query, top_k=5):
     query_embedding = get_embedding(query)
@@ -119,7 +119,7 @@ def search_documents(query, top_k=5):
     return response.data
 ```
 
-** Step 8: Example Usage**
+**Step 8: Example Usage**
 ```
 # Insert a document
 insert_document("Supabase is an open-source Firebase alternative.")
