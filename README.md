@@ -20,6 +20,121 @@ we examined four critical bias types:
 - Python 3.8 or higher
 - Poetry for dependency management
 - OpenAI API and other LLMs API access key 
+- Supabase setup
+
+## Setting up Supabase
+
+ **Step 1: Create a Supabase Project**
+
+1. Go to [https://app.supabase.com](https://app.supabase.com).
+2. Click **New Project**.
+3. Fill in:
+   - **Project Name**
+   - **Database Password**
+   - **Region**
+4. Click **Create Project**.
+5. Once your project is ready, go to **Settings > API** and copy:
+   - `Project URL`
+   - `anon` or `service_role` API Key
+  
+** Step 2: Enable pgvector and Create Table**
+
+1. In your Supabase project, go to **SQL Editor**.
+2. Paste and run the following SQL:
+
+```sql
+create extension if not exists vector;
+
+create table documents (
+  id uuid default gen_random_uuid() primary key,
+  content text,
+  embedding vector(1536)
+);
+```
+create index on documents using ivfflat (embedding vector_cosine_ops) with (lists = 100);
+
+
+**Step 3: Add a Retrieval Function**
+```
+create or replace function match_documents(
+  query_embedding vector(1536),
+  match_count int
+)
+returns table (
+  id uuid,
+  content text,
+  similarity float
+)
+language sql
+as $$
+  select
+    id,
+    content,
+    1 - (embedding <=> query_embedding) as similarity
+  from documents
+  order by embedding <=> query_embedding
+  limit match_count;
+$$;
+```
+
+**Step 4:  Set Up Google Colab**
+```
+!pip install supabase openai tiktoken numpy --quiet
+```
+**Step 5:  Connect to Supabase and OpenAI**
+```
+from google.colab import userdata
+from supabase import create_client
+import openai
+import numpy as np
+
+SUPABASE_URL = userdata.get("SUPABASE_URL")
+SUPABASE_KEY = userdata.get("SUPABASE_KEY")
+OPENAI_KEY = userdata.get("OPENAI_API_KEY")
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+openai.api_key = OPENAI_KEY
+```
+** Step 6: Define Functions to Embed and Insert Data**
+```
+def get_embedding(text, model="text-embedding-3-small"):
+    response = openai.embeddings.create(input=[text], model=model)
+    return response.data[0].embedding
+
+def insert_document(text):
+    embedding = get_embedding(text)
+    supabase.table("documents").insert({
+        "content": text,
+        "embedding": embedding
+    }).execute()
+```
+** Step 7: Define Retrieval Function
+```
+def search_documents(query, top_k=5):
+    query_embedding = get_embedding(query)
+    response = supabase.rpc("match_documents", {
+        "query_embedding": query_embedding,
+        "match_count": top_k
+    }).execute()
+    return response.data
+```
+
+** Step 8: Example Usage**
+```
+# Insert a document
+insert_document("Supabase is an open-source Firebase alternative.")
+
+# Search for similar documents
+results = search_documents("What is Supabase?", top_k=3)
+
+# Display results
+for doc in results:
+    print(f"Score: {doc['similarity']:.4f}")
+    print(f"Content: {doc['content']}\n")
+```
+
+
+
 
 ## Installation
 
