@@ -1,0 +1,481 @@
+{
+  "name": "D-talk-Data retrieval",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        280
+      ],
+      "id": "800e4a01-ade7-4334-ae5f-d693e2fe46b1",
+      "name": "Microsoft SharePoint HTTP Request",
+      "extendsCredential": "microsoftSharePointOAuth2Api",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "Pf9U7cEFGE3QxACR",
+          "name": "Microsoft_Credential_2"
+        },
+        "microsoftSharePointOAuth2Api": {
+          "id": "LaJbS8oq0PQqr10Y",
+          "name": "Microsoft SharePoint"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": " ",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        280
+      ],
+      "id": "61a7cfd6-5d42-4406-a5bf-c188054c5770",
+      "name": "Get the pages name from Microsoft Graph API",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "Pf9U7cEFGE3QxACR",
+          "name": "Microsoft_Credential_2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        260
+      ],
+      "id": "8a682862-afe4-4a17-9324-06bd560d7f4e",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Pi6mDrn1zfhkVmNg",
+          "name": "Supabase D-talk"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        440
+      ],
+      "id": "2f4c1cf6-67c0-4a9a-bf19-7c8262f92e93",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "gYafL523OfyPkXnm",
+          "name": "OpenAi D-talk"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        460
+      ],
+      "id": "",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 10,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        580
+      ],
+      "id": "8774bf1b-efdd-42e3-8620-a03bd153c186",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract the response data (the pages' JSON response)\nconst items = $json[\"value\"];\n// Loop through the array of pages and extract the webUrl of each page\nconst extractedUrls = items.map(item => ({\n  json: {\n    webUrl: item.id // extracting the webUrl from each item\n  }\n}));\n\n// Return the extracted webUrls\nreturn extractedUrls;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        280
+      ],
+      "id": "ce8cd09c-2b62-4b3d-b115-36b42d502cbd",
+      "name": "Code to extract all the page numbers"
+    },
+    {
+      "parameters": {
+        "url": "",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        120
+      ],
+      "id": "9fae9200-2191-4b1c-aeed-3e032fa2e76c",
+      "name": "Microsoft Graph API for metadata",
+      "retryOnFail": false,
+      "credentials": {
+        "oAuth2Api": {
+          "id": "Pf9U7cEFGE3QxACR",
+          "name": "Microsoft_Credential_2"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input data from previous node\nconst items = $input.all();\n\n// Process each row and merge everything into a single content string\nconst formattedData = items.map(item => {\n    const row = item.json; // Extract row data\n\n    // Merge all fields (column names and values) into a single content field\n    const content = Object.entries(row)\n        .map(([key, value]) => `${key}: ${value !== null ? value : 'N/A'}`) // Handle null values\n        .join(\" | \"); // Use separator for clarity\n\n    return {\n        json: {\n            \n            content: content,  // Single merged content string\n            \n        }\n    };\n});\n\n// Return formatted data\nreturn formattedData;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        260
+      ],
+      "id": "3c225e38-c973-41d9-96ab-ffce5c3351dd",
+      "name": "Code to extract the file contents as text"
+    },
+    {
+      "parameters": {
+        "url": "",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        380
+      ],
+      "id": "845658b6-b300-44b1-a950-97cc6bf9037b",
+      "name": "HTTP Request to get content",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "Pf9U7cEFGE3QxACR",
+          "name": "Microsoft_Credential_2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "id"
+            }
+          ]
+        },
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        860,
+        260
+      ],
+      "id": "303d880f-0b6a-4524-8590-0342e760eaa8",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        280
+      ],
+      "id": "98dee141-ef77-41aa-8811-c50dfdc02f14",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This function extracts text from HTML while preserving basic structure\nfunction extractTextFromHtml(html) {\n  if (!html) return '';\n  \n  // Replace paragraphs with newlines\n  let text = html.replace(/<p[^>]*>(.*?)<\\/p>/g, '$1\\n');\n  \n  // Replace headers with their content\n  text = text.replace(/<h[1-6][^>]*>(.*?)<\\/h[1-6]>/g, '$1\\n');\n  \n  // Replace list items with bullet points\n  text = text.replace(/<li[^>]*>(.*?)<\\/li>/g, '• $1\\n');\n  \n  // Replace strong tags\n  text = text.replace(/<strong>(.*?)<\\/strong>/g, '$1');\n  \n  // Replace emphasis/italic tags\n  text = text.replace(/<i>(.*?)<\\/i>/g, '$1');\n  text = text.replace(/<em>(.*?)<\\/em>/g, '$1');\n  \n  // Replace links with just their text\n  text = text.replace(/<a[^>]*>(.*?)<\\/a>/g, '$1');\n  \n  // Replace special characters\n  text = text.replace(/&nbsp;/g, ' ');\n  text = text.replace(/&amp;/g, '&');\n  text = text.replace(/&lt;/g, '<');\n  text = text.replace(/&gt;/g, '>');\n  \n  // Remove remaining HTML tags\n  text = text.replace(/<[^>]*>/g, '');\n  \n  // Clean up whitespace\n  text = text.replace(/\\s+/g, ' ');\n  text = text.replace(/\\n\\s*\\n/g, '\\n');\n  \n  return text.trim();\n}\n\n// Process a single SharePoint JSON object\nfunction processSharePointData(jsonData) {\n  try {\n    // Extract page ID from @odata.context\n    const context = jsonData['@odata.context'] || '';\n    const pageIdMatch = context.match(/pages\\('([^']+)'\\)/);\n    const pageId = pageIdMatch ? pageIdMatch[1] : \"unknown\";\n    \n    // Extract content from web parts\n    const contentParts = [];\n    \n    if (Array.isArray(jsonData.value)) {\n      jsonData.value.forEach(webPart => {\n        // Handle text web parts\n        if (webPart['@odata.type'] === '#microsoft.graph.textWebPart') {\n          const innerHtml = webPart.innerHtml || '';\n          contentParts.push(extractTextFromHtml(innerHtml));\n        }\n        \n        // Handle standard web parts\n        else if (webPart['@odata.type'] === '#microsoft.graph.standardWebPart') {\n          const webPartData = webPart.data || {};\n          const description = webPartData.description || '';\n          const title = webPartData.title || '';\n          \n          if (description || title) {\n            contentParts.push(`${description} ${title}`);\n          }\n          \n          // Extract properties\n          const properties = webPartData.properties || {};\n          if (properties && properties.title) {\n            contentParts.push(properties.title);\n          }\n        }\n      });\n    }\n    \n    const content = contentParts.join(' ');\n    \n    return {\n      id: pageId,\n      content: content,\n      formattedOutput: `id:${pageId}\\ncontent:${content}`\n    };\n  } catch (error) {\n    return {\n      id: \"error\",\n      content: `Error processing data: ${error.message}`,\n      formattedOutput: `id:error\\ncontent:Error processing data: ${error.message}`\n    };\n  }\n}\n\n// Main function to process all input items\nfunction processItems(items) {\n  const results = [];\n  \n  for (const item of items) {\n    try {\n      // Access the data field which contains the JSON string\n      const jsonString = item.json.data;\n      \n      // Parse the JSON string\n      const jsonData = JSON.parse(jsonString);\n      \n      // Process the SharePoint data\n      const result = processSharePointData(jsonData);\n      \n      // Add the result to the output\n      results.push({\n        json: result\n      });\n    } catch (error) {\n      results.push({\n        json: {\n          id: \"parsing_error\",\n          content: `Error parsing JSON: ${error.message}`,\n          formattedOutput: `id:parsing_error\\ncontent:Error parsing JSON: ${error.message}`,\n          error: error.message\n        }\n      });\n    }\n  }\n  \n  return results;\n}\n\n// Execute the function with the items from n8n\nreturn processItems($input.all());"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        380
+      ],
+      "id": "e3fe7179-3ba3-43ca-80bd-219f69205422",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process a single SharePoint page entity\nfunction processSharePointPageEntity(jsonData) {\n  try {\n    // Extract page ID directly from the id field\n    const pageId = jsonData.id || \"unknown\";\n    \n    // Extract content from various fields\n    const contentParts = [];\n    \n    // Add title from name field (removing file extension and converting dashes to spaces)\n    if (jsonData.name) {\n      const title = jsonData.name\n        .replace(/\\.aspx$/, '')\n        .replace(/-/g, ' ');\n      contentParts.push(title);\n    }\n    \n    // Add description if available\n    if (jsonData.description) {\n      contentParts.push(jsonData.description);\n    }\n    \n    const content = contentParts.join(' ');\n    \n    // Extract additional information\n    const webUrl = jsonData.webUrl || \"unknown\";\n    const createdDateTime = jsonData.createdDateTime || \"unknown\";\n    const lastModifiedDateTime = jsonData.lastModifiedDateTime || \"unknown\";\n    \n    // Extract creator information\n    let creatorName = \"unknown\";\n    let creatorEmail = \"unknown\";\n    \n    // Check different possible locations for creator info\n    if (jsonData.createdBy && jsonData.createdBy.user) {\n      creatorName = jsonData.createdBy.user.displayName || \"unknown\";\n      creatorEmail = jsonData.createdBy.user.email || \"unknown\";\n    } else if (jsonData.lastModifiedBy && jsonData.lastModifiedBy.user) {\n      // Fallback to modifier if creator is not available\n      creatorName = jsonData.lastModifiedBy.user.displayName || \"unknown\";\n      creatorEmail = jsonData.lastModifiedBy.user.email || \"unknown\";\n    }\n    \n    return {\n      id: pageId,\n      content: content,\n      webUrl: webUrl,\n      creatorName: creatorName,\n      creatorEmail: creatorEmail,\n      createdDateTime: createdDateTime,\n      lastModifiedDateTime: lastModifiedDateTime,\n      formattedOutput: `id:${pageId}\\ncontent:${content}\\nwebUrl:${webUrl}\\ncreator:${creatorName} (${creatorEmail})\\ncreated:${createdDateTime}\\nlastModified:${lastModifiedDateTime}`\n    };\n  } catch (error) {\n    return {\n      id: \"error\",\n      content: `Error processing data: ${error.message}`,\n      webUrl: \"unknown\",\n      creatorName: \"unknown\",\n      creatorEmail: \"unknown\",\n      createdDateTime: \"unknown\",\n      lastModifiedDateTime: \"unknown\",\n      formattedOutput: `id:error\\ncontent:Error processing data: ${error.message}`\n    };\n  }\n}\n\n// Main function to process all input items\nfunction processItems(items) {\n  const results = [];\n  \n  for (const item of items) {\n    try {\n      // Access the data field which contains the JSON string\n      const jsonString = item.json.data;\n      \n      // Handle potentially truncated JSON by removing trailing comma or incomplete property\n      const cleanedJsonString = jsonString.replace(/,\\s*\"[^\"]*$/, '\"}');\n      \n      // Parse the JSON string\n      let jsonData;\n      try {\n        jsonData = JSON.parse(cleanedJsonString);\n      } catch (parseError) {\n        // If parsing fails, try to fix common JSON issues\n        // This is a more aggressive fix for severely truncated JSON\n        const fixedJsonString = cleanedJsonString\n          .replace(/\\{([^}]*)$/, '{$1}')  // Close unclosed object\n          .replace(/,\\s*$/, '');          // Remove trailing comma\n          \n        jsonData = JSON.parse(fixedJsonString);\n      }\n      \n      // Process the SharePoint data\n      const result = processSharePointPageEntity(jsonData);\n      \n      // Add the result to the output\n      results.push({\n        json: result\n      });\n    } catch (error) {\n      results.push({\n        json: {\n          id: \"parsing_error\",\n          content: `Error parsing JSON: ${error.message}`,\n          webUrl: \"unknown\",\n          creatorName: \"unknown\",\n          creatorEmail: \"unknown\",\n          createdDateTime: \"unknown\",\n          lastModifiedDateTime: \"unknown\",\n          formattedOutput: `id:parsing_error\\ncontent:Error parsing JSON: ${error.message}`,\n          error: error.message\n        }\n      });\n    }\n  }\n  \n  return results;\n}\n\n// Execute the function with the items from n8n\nreturn processItems($input.all());"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        120
+      ],
+      "id": "c6c583d7-66de-4050-a57c-a0f593ef8de4",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "lt",
+              "keyValue": "1000"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        120
+      ],
+      "id": "a31eea2a-6afd-45b2-a98d-a17dd66ae69a",
+      "name": "Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Pi6mDrn1zfhkVmNg",
+          "name": "Supabase D-talk"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Microsoft SharePoint HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Get the pages name from Microsoft Graph API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the pages name from Microsoft Graph API": {
+      "main": [
+        [
+          {
+            "node": "Code to extract all the page numbers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code to extract all the page numbers": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request to get content",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Microsoft Graph API for metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Microsoft Graph API for metadata": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code to extract the file contents as text": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request to get content": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code to extract the file contents as text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Microsoft SharePoint HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "098c231f-8147-4364-a372-e6066d5bbff9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6596ae5d08bb6a9b8b8a68a9bc54de7ff6962f3f7f56cf75006ed3b3f861aa14"
+  },
+  "id": "CXL29EQQPLUtyK3E",
+  "tags": []
+}
