@@ -1,11 +1,11 @@
-# UnBiasAI
+# BRAIN BiasAI
 
-UnBiasAI is a Python package developed by [BRAIN](https://brain.dtsc.be/) (the [DTSC](https://www.dtsc.be) AI-research lab). 
+BRAIN BiasAI is a Python package developed by [BRAIN](https://brain.dtsc.be/) (the [DTSC](https://www.dtsc.be) AI-research lab). 
 It is designed to help users identify and mitigate bias in AI-generated text. 
 It provides tools for analyzing text, detecting bias, and generating unbiased responses.
 
 ## Features
-UnBiasAI analyzes five possible biases among five leading Large Language Models (LLMs)—GPT-4, Claude, Cohere, Mistral, and DeepSeek.
+BRAIN BiasAI analyzes five possible biases among five leading Large Language Models (LLMs)—GPT-4, Claude, Cohere, Mistral, and DeepSeek.
 Leveraging a controlled Retrieval-Augmented Generation (RAG) pipeline and over 250 real-world queries grounded in corporate documentation, 
 we examined four critical bias types: 
 
